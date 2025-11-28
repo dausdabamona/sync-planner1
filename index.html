@@ -3,357 +3,2248 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="theme-color" content="#1565C0">
-  <meta name="description" content="Sync Planner - Produktivitas Islami">
+  <meta name="theme-color" content="#0D47A1">
+  <meta name="description" content="Sync Planner - Produktivitas Islami untuk ASN">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Sync Planner</title>
+  <title>Sync Planner - Produktivitas Islami</title>
   
   <link rel="manifest" href="manifest.json">
-  <link rel="icon" type="image/png" href="icon-192.png">
-  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="icon" type="image/png" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      --primary: #1565C0;
-      --primary-dark: #0D47A1;
+      --primary: #0D47A1;
+      --primary-dark: #002171;
+      --primary-light: #5472D3;
+      --secondary: #00695C;
+      --secondary-light: #439889;
+      --accent: #FF6F00;
+      --accent-light: #FFA040;
       --success: #2E7D32;
       --success-light: #E8F5E9;
       --warning: #F57C00;
       --warning-light: #FFF3E0;
       --danger: #C62828;
+      --danger-light: #FFEBEE;
+      --info: #0277BD;
+      --info-light: #E1F5FE;
+      
       --gray-50: #FAFAFA;
       --gray-100: #F5F5F5;
       --gray-200: #EEEEEE;
       --gray-300: #E0E0E0;
+      --gray-400: #BDBDBD;
       --gray-500: #9E9E9E;
       --gray-600: #757575;
       --gray-700: #616161;
+      --gray-800: #424242;
       --gray-900: #212121;
-      --spiritual: #7B1FA2;
+      
+      --spiritual: #6A1B9A;
       --spiritual-light: #F3E5F5;
-      --tubuh: #00838F;
-      --tubuh-light: #E0F7FA;
-      --pikiran: #EF6C00;
-      --pikiran-light: #FFF3E0;
-      --pomodoro: #E53935;
+      --health: #00838F;
+      --health-light: #E0F7FA;
+      --mind: #EF6C00;
+      --mind-light: #FFF3E0;
+      --social: #C2185B;
+      --social-light: #FCE4EC;
+      --wealth: #558B2F;
+      --wealth-light: #F1F8E9;
+      --career: #1565C0;
+      --career-light: #E3F2FD;
+      
+      --gradient-header: linear-gradient(135deg, #1a237e 0%, #0d47a1 50%, #01579b 100%);
+      --gradient-spiritual: linear-gradient(135deg, #4A148C 0%, #7B1FA2 100%);
+      --gradient-success: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
+      --gradient-accent: linear-gradient(135deg, #E65100 0%, #FF6F00 100%);
+      
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+      --shadow-xl: 0 12px 48px rgba(0,0,0,0.15);
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --radius-full: 9999px;
+      
+      --font-arabic: 'Amiri', serif;
     }
     
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
     body {
-      font-family: 'Inter', -apple-system, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--gray-100);
       color: var(--gray-900);
       min-height: 100vh;
       padding-bottom: 80px;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
     }
     
+    /* Typography */
+    .arabic { font-family: var(--font-arabic); font-size: 1.2em; direction: rtl; }
+    .text-xs { font-size: 11px; }
+    .text-sm { font-size: 13px; }
+    .text-base { font-size: 14px; }
+    .text-lg { font-size: 16px; }
+    .text-xl { font-size: 18px; }
+    .text-2xl { font-size: 24px; }
+    .font-medium { font-weight: 500; }
+    .font-semibold { font-weight: 600; }
+    .font-bold { font-weight: 700; }
+    
+    /* Header */
     .header {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      background: var(--gradient-header);
       color: white;
-      padding: 20px;
+      padding: 16px 20px 24px;
       position: sticky;
       top: 0;
       z-index: 100;
     }
+    
     .header-top { display: flex; justify-content: space-between; align-items: center; }
-    .header h1 { font-size: 20px; }
-    .header-date { font-size: 14px; opacity: 0.9; }
-    .header-stats { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
-    .stat-item { background: rgba(255,255,255,0.15); padding: 6px 12px; border-radius: 20px; font-size: 12px; display: flex; align-items: center; gap: 5px; }
+    .header h1 { font-size: 22px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+    .header-date { 
+      font-size: 12px; 
+      background: rgba(255,255,255,0.2); 
+      padding: 8px 16px; 
+      border-radius: var(--radius-full); 
+      font-weight: 600;
+      backdrop-filter: blur(10px);
+    }
     
-    .main { padding: 16px; max-width: 600px; margin: 0 auto; }
+    .header-greeting {
+      margin-top: 16px;
+      padding: 16px;
+      background: rgba(255,255,255,0.1);
+      border-radius: var(--radius-md);
+      backdrop-filter: blur(10px);
+    }
     
-    .card { background: white; border-radius: 14px; padding: 16px; margin-bottom: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
-    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .card-title { font-size: 15px; font-weight: 600; }
+    .header-greeting .arabic {
+      font-size: 20px;
+      text-align: center;
+      margin-bottom: 8px;
+      opacity: 0.95;
+    }
     
-    .sholat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-    .sholat-item { display: flex; flex-direction: column; align-items: center; padding: 12px 6px; border-radius: 10px; background: var(--gray-50); border: 2px solid var(--gray-200); cursor: pointer; transition: all 0.2s; position: relative; }
+    .header-greeting .translation {
+      font-size: 12px;
+      text-align: center;
+      opacity: 0.8;
+      font-style: italic;
+    }
+    
+    .header-stats { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+    .stat-item {
+      display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600;
+      background: rgba(255,255,255,0.15); padding: 10px 16px; border-radius: var(--radius-full);
+      backdrop-filter: blur(10px);
+    }
+    .stat-item .value { font-weight: 700; }
+    
+    /* Main */
+    .main { padding: 20px; max-width: 900px; margin: 0 auto; }
+    
+    /* Card */
+    .card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s;
+    }
+    .card:hover { box-shadow: var(--shadow-md); }
+    .card-header { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .card-title { 
+      font-size: 16px; 
+      font-weight: 700; 
+      display: flex; 
+      align-items: center; 
+      gap: 10px;
+      color: var(--gray-800);
+    }
+    .card-action { 
+      font-size: 13px; 
+      color: var(--primary); 
+      font-weight: 600; 
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      transition: all 0.2s;
+    }
+    .card-action:hover { background: var(--info-light); }
+    
+    /* Section */
+    .section-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin: 28px 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--gray-200);
+    }
+    
+    /* Sholat Tracker */
+    .sholat-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    
+    .sholat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px 8px;
+      border-radius: var(--radius-md);
+      background: var(--gray-50);
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+    }
+    
+    .sholat-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-md);
+      background: var(--gradient-spiritual);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .sholat-item:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
     .sholat-item:active { transform: scale(0.95); }
-    .sholat-item.done { background: var(--success-light); border-color: var(--success); }
-    .sholat-item .icon { font-size: 22px; margin-bottom: 4px; }
-    .sholat-item .name { font-size: 10px; font-weight: 600; color: var(--gray-700); }
+    
+    .sholat-item.done {
+      background: var(--success-light);
+      border-color: var(--success);
+    }
+    .sholat-item.done::before { opacity: 0; }
+    
+    .sholat-item .icon { font-size: 28px; margin-bottom: 8px; position: relative; z-index: 1; }
+    .sholat-item .name { 
+      font-size: 11px; 
+      font-weight: 700; 
+      color: var(--gray-600); 
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: relative;
+      z-index: 1;
+    }
     .sholat-item.done .name { color: var(--success); }
-    .sholat-item .time { font-size: 9px; color: var(--gray-500); }
+    .sholat-item .time { 
+      font-size: 10px; 
+      color: var(--gray-500); 
+      margin-top: 4px;
+      font-weight: 500;
+      position: relative;
+      z-index: 1;
+    }
+    .sholat-item.done .time { color: var(--success); }
     
-    .section-title { font-size: 12px; font-weight: 700; color: var(--gray-500); text-transform: uppercase; margin: 20px 0 10px; }
+    .sholat-item .streak {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: var(--accent);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: var(--radius-full);
+    }
     
-    .quick-actions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .action-btn { display: flex; flex-direction: column; align-items: center; padding: 20px; background: white; border: none; border-radius: 14px; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
-    .action-btn:active { transform: scale(0.96); }
-    .action-btn .icon { font-size: 30px; margin-bottom: 8px; }
-    .action-btn .label { font-size: 12px; font-weight: 600; color: var(--gray-700); }
-    .action-btn.primary { background: linear-gradient(135deg, var(--pomodoro), #C62828); }
+    /* Habit Rosulullah */
+    .habit-rosul {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .habit-rosul-item {
+      display: flex;
+      align-items: center;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--spiritual-light) 0%, white 100%);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .habit-rosul-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--spiritual);
+    }
+    
+    .habit-rosul-item:hover { 
+      transform: translateX(4px); 
+      box-shadow: var(--shadow-md);
+      border-color: var(--spiritual-light);
+    }
+    
+    .habit-rosul-item.done {
+      background: var(--success-light);
+      border-color: var(--success);
+    }
+    .habit-rosul-item.done::before { background: var(--success); }
+    
+    .habit-rosul-checkbox {
+      width: 28px;
+      height: 28px;
+      border: 2px solid var(--gray-300);
+      border-radius: var(--radius-full);
+      margin-right: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 14px;
+      font-weight: bold;
+      transition: all 0.3s;
+      background: white;
+    }
+    
+    .habit-rosul-item.done .habit-rosul-checkbox {
+      background: var(--success);
+      border-color: var(--success);
+      color: white;
+    }
+    
+    .habit-rosul-info { flex: 1; }
+    .habit-rosul-name { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .habit-rosul-arabic { font-family: var(--font-arabic); font-size: 14px; color: var(--spiritual); margin-bottom: 4px; }
+    .habit-rosul-benefit { font-size: 12px; color: var(--gray-600); }
+    .habit-rosul-item.done .habit-rosul-name { color: var(--success); }
+    
+    .habit-rosul-time {
+      font-size: 11px;
+      background: var(--spiritual);
+      color: white;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+    }
+    .habit-rosul-item.done .habit-rosul-time { background: var(--success); }
+    
+    /* Quick Actions */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    
+    .action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 12px;
+      background: white;
+      border: none;
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .action-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gradient-header);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .action-btn:hover { 
+      transform: translateY(-4px); 
+      box-shadow: var(--shadow-lg);
+    }
+    .action-btn:hover::before { opacity: 0.05; }
+    .action-btn:active { transform: scale(0.95); }
+    
+    .action-btn .icon { font-size: 30px; margin-bottom: 10px; position: relative; z-index: 1; }
+    .action-btn .label { 
+      font-size: 12px; 
+      font-weight: 600; 
+      color: var(--gray-700);
+      position: relative;
+      z-index: 1;
+    }
+    
+    .action-btn.primary {
+      background: var(--gradient-header);
+    }
+    .action-btn.primary::before { display: none; }
     .action-btn.primary .label { color: white; }
     
-    .habit-item { display: flex; align-items: center; padding: 12px; background: var(--gray-50); border-radius: 10px; margin-bottom: 8px; cursor: pointer; border: 2px solid transparent; }
-    .habit-item:active { transform: scale(0.98); }
-    .habit-item.done { background: var(--success-light); border-color: var(--success); }
-    .habit-checkbox { width: 24px; height: 24px; border: 2px solid var(--gray-300); border-radius: 50%; margin-right: 12px; display: flex; align-items: center; justify-content: center; font-size: 12px; }
-    .habit-item.done .habit-checkbox { background: var(--success); border-color: var(--success); color: white; }
-    .habit-info { flex: 1; }
-    .habit-name { font-size: 13px; font-weight: 500; }
-    .habit-meta { font-size: 11px; color: var(--gray-500); }
-    .habit-badge { font-size: 9px; padding: 3px 8px; border-radius: 10px; font-weight: 600; }
-    .badge-spiritual { background: var(--spiritual-light); color: var(--spiritual); }
-    .badge-tubuh { background: var(--tubuh-light); color: var(--tubuh); }
-    .badge-pikiran { background: var(--pikiran-light); color: var(--pikiran); }
+    .action-btn.accent {
+      background: var(--gradient-accent);
+    }
+    .action-btn.accent::before { display: none; }
+    .action-btn.accent .label { color: white; }
     
-    .journal-entry { padding: 12px; background: var(--gray-50); border-radius: 10px; margin-bottom: 8px; border-left: 3px solid var(--primary); }
-    .journal-time { font-size: 11px; color: var(--primary); font-weight: 600; margin-bottom: 4px; }
-    .journal-content { font-size: 13px; line-height: 1.5; }
+    /* Vision Pyramid */
+    .vision-pyramid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
     
-    .pomodoro-active { background: linear-gradient(135deg, var(--pomodoro), #C62828); color: white; text-align: center; padding: 20px; }
-    .timer-time { font-size: 48px; font-weight: 700; }
-    .timer-label { font-size: 13px; opacity: 0.9; margin-top: 4px; }
-    .timer-task { font-size: 13px; opacity: 0.8; margin-top: 8px; }
-    .timer-controls { display: flex; justify-content: center; gap: 10px; margin-top: 16px; }
-    .timer-btn { padding: 12px 28px; border: none; border-radius: 25px; font-size: 13px; font-weight: 600; cursor: pointer; }
-    .timer-btn.complete { background: white; color: var(--pomodoro); }
-    .timer-btn.cancel { background: rgba(255,255,255,0.2); color: white; }
+    .vision-level {
+      background: white;
+      border-radius: var(--radius-md);
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-left: 4px solid var(--primary);
+      position: relative;
+    }
     
-    .goal-card { background: white; border-radius: 14px; padding: 14px; margin-bottom: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); border-left: 4px solid var(--primary); cursor: pointer; }
-    .goal-card:active { transform: scale(0.98); }
-    .goal-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
-    .goal-desc { font-size: 12px; color: var(--gray-600); margin-bottom: 10px; }
-    .goal-progress { background: var(--gray-200); border-radius: 4px; height: 6px; overflow: hidden; }
-    .goal-progress-bar { background: var(--success); height: 100%; }
-    .goal-stats { font-size: 11px; color: var(--gray-500); margin-top: 8px; display: flex; justify-content: space-between; }
+    .vision-level:hover { 
+      transform: translateX(4px);
+      box-shadow: var(--shadow-md);
+    }
     
-    .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .stat-card { background: white; border-radius: 14px; padding: 20px; text-align: center; }
-    .stat-value { font-size: 32px; font-weight: 700; color: var(--primary); }
-    .stat-label { font-size: 11px; color: var(--gray-500); margin-top: 4px; }
+    .vision-level.level-10 { border-left-color: var(--spiritual); background: linear-gradient(90deg, var(--spiritual-light) 0%, white 30%); }
+    .vision-level.level-3 { border-left-color: var(--secondary); background: linear-gradient(90deg, rgba(0,105,92,0.1) 0%, white 30%); }
+    .vision-level.level-1 { border-left-color: var(--primary); background: linear-gradient(90deg, var(--info-light) 0%, white 30%); }
+    .vision-level.level-quarter { border-left-color: var(--accent); background: linear-gradient(90deg, var(--warning-light) 0%, white 30%); }
     
-    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; display: flex; justify-content: space-around; padding: 8px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 100; }
-    .nav-item { display: flex; flex-direction: column; align-items: center; padding: 8px 16px; color: var(--gray-500); text-decoration: none; font-size: 10px; font-weight: 600; }
+    .vision-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .vision-period { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+    .vision-level.level-10 .vision-period { color: var(--spiritual); }
+    .vision-level.level-3 .vision-period { color: var(--secondary); }
+    .vision-level.level-1 .vision-period { color: var(--primary); }
+    .vision-level.level-quarter .vision-period { color: var(--accent); }
+    
+    .vision-edit { font-size: 12px; color: var(--gray-500); }
+    .vision-content { font-size: 14px; color: var(--gray-700); line-height: 1.6; }
+    .vision-empty { font-size: 13px; color: var(--gray-400); font-style: italic; }
+    
+    /* Pairwise Comparison */
+    .pairwise-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .pairwise-progress {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    
+    .pairwise-progress-bar {
+      height: 8px;
+      background: var(--gray-200);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    
+    .pairwise-progress-fill {
+      height: 100%;
+      background: var(--gradient-success);
+      transition: width 0.5s;
+    }
+    
+    .pairwise-vs {
+      display: flex;
+      gap: 16px;
+      align-items: stretch;
+    }
+    
+    .pairwise-option {
+      flex: 1;
+      padding: 24px 20px;
+      background: white;
+      border: 3px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: center;
+    }
+    
+    .pairwise-option:hover {
+      border-color: var(--primary);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .pairwise-option:active {
+      transform: scale(0.98);
+    }
+    
+    .pairwise-option.selected {
+      border-color: var(--success);
+      background: var(--success-light);
+    }
+    
+    .pairwise-option-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--gray-800);
+    }
+    
+    .pairwise-option-desc {
+      font-size: 13px;
+      color: var(--gray-600);
+      line-height: 1.5;
+    }
+    
+    .pairwise-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--gray-400);
+    }
+    
+    .pairwise-result {
+      background: var(--success-light);
+      border: 2px solid var(--success);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+    
+    .pairwise-result-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--success);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .pairwise-rank-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .pairwise-rank-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: white;
+      border-radius: var(--radius-sm);
+    }
+    
+    .pairwise-rank-number {
+      width: 28px;
+      height: 28px;
+      background: var(--success);
+      color: white;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    
+    .pairwise-rank-item:nth-child(1) .pairwise-rank-number { background: #FFD700; color: var(--gray-800); }
+    .pairwise-rank-item:nth-child(2) .pairwise-rank-number { background: #C0C0C0; color: var(--gray-800); }
+    .pairwise-rank-item:nth-child(3) .pairwise-rank-number { background: #CD7F32; color: white; }
+    
+    .pairwise-rank-title { flex: 1; font-size: 14px; font-weight: 600; }
+    
+    /* Kanban Board */
+    .kanban-container {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 20px;
+      margin: 0 -20px;
+      padding: 0 20px;
+      scroll-snap-type: x mandatory;
+    }
+    
+    .kanban-column {
+      min-width: 300px;
+      max-width: 320px;
+      flex-shrink: 0;
+      background: var(--gray-100);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      scroll-snap-align: start;
+    }
+    
+    .kanban-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--gray-200);
+    }
+    
+    .kanban-title {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .kanban-column.backlog .kanban-title { color: var(--gray-600); }
+    .kanban-column.todo .kanban-title { color: var(--primary); }
+    .kanban-column.progress .kanban-title { color: var(--warning); }
+    .kanban-column.done .kanban-title { color: var(--success); }
+    
+    .kanban-count {
+      font-size: 12px;
+      background: var(--gray-300);
+      color: var(--gray-700);
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+    }
+    
+    .kanban-tasks { min-height: 120px; }
+    
+    .task-card {
+      background: white;
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      transition: all 0.3s;
+      border-left: 4px solid var(--gray-300);
+      position: relative;
+    }
+    
+    .task-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .task-card.priority-high { border-left-color: var(--danger); }
+    .task-card.priority-medium { border-left-color: var(--warning); }
+    .task-card.priority-low { border-left-color: var(--gray-400); }
+    .task-card.from-pairwise { border-left-color: var(--spiritual); background: linear-gradient(90deg, var(--spiritual-light) 0%, white 20%); }
+    
+    .task-title { font-size: 14px; font-weight: 600; margin-bottom: 10px; line-height: 1.4; }
+    .task-meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    
+    .task-label {
+      font-size: 10px;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+    }
+    .task-label.priority-high { background: var(--danger-light); color: var(--danger); }
+    .task-label.priority-medium { background: var(--warning-light); color: var(--warning); }
+    .task-label.priority-low { background: var(--gray-200); color: var(--gray-600); }
+    .task-label.from-pairwise { background: var(--spiritual-light); color: var(--spiritual); }
+    
+    .task-due {
+      font-size: 11px;
+      color: var(--gray-500);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 500;
+    }
+    .task-due.overdue { color: var(--danger); font-weight: 600; }
+    
+    .task-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--gray-100);
+    }
+    
+    .task-action-btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--gray-100);
+      color: var(--gray-700);
+    }
+    .task-action-btn:hover { background: var(--gray-200); }
+    .task-action-btn.primary { background: var(--primary); color: white; }
+    .task-action-btn.primary:hover { background: var(--primary-dark); }
+    .task-action-btn.success { background: var(--success); color: white; }
+    .task-action-btn.success:hover { background: #1B5E20; }
+    
+    .add-task-btn {
+      width: 100%;
+      padding: 14px;
+      border: 2px dashed var(--gray-300);
+      border-radius: var(--radius-md);
+      background: transparent;
+      color: var(--gray-500);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .add-task-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--info-light);
+    }
+    
+    /* Goal Card */
+    .goal-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      transition: all 0.3s;
+      border-left: 5px solid var(--primary);
+      position: relative;
+    }
+    
+    .goal-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .goal-card.rank-1 { border-left-color: #FFD700; }
+    .goal-card.rank-2 { border-left-color: #C0C0C0; }
+    .goal-card.rank-3 { border-left-color: #CD7F32; }
+    
+    .goal-rank {
+      position: absolute;
+      top: -8px;
+      left: -8px;
+      width: 32px;
+      height: 32px;
+      background: var(--primary);
+      color: white;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: var(--shadow-md);
+    }
+    
+    .goal-card.rank-1 .goal-rank { background: #FFD700; color: var(--gray-800); }
+    .goal-card.rank-2 .goal-rank { background: #C0C0C0; color: var(--gray-800); }
+    .goal-card.rank-3 .goal-rank { background: #CD7F32; }
+    
+    .goal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+    .goal-title { font-size: 17px; font-weight: 700; color: var(--gray-800); flex: 1; padding-right: 16px; }
+    .goal-quarter { 
+      font-size: 11px; 
+      background: var(--primary); 
+      color: white;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+    }
+    
+    .goal-desc { font-size: 13px; color: var(--gray-600); margin-bottom: 16px; line-height: 1.6; }
+    
+    .goal-progress-container { margin-bottom: 12px; }
+    .goal-progress-header { display: flex; justify-content: space-between; margin-bottom: 6px; }
+    .goal-progress-label { font-size: 12px; color: var(--gray-500); font-weight: 500; }
+    .goal-progress-value { font-size: 12px; color: var(--primary); font-weight: 700; }
+    .goal-progress { background: var(--gray-200); border-radius: var(--radius-full); height: 10px; overflow: hidden; }
+    .goal-progress-bar { background: var(--gradient-success); height: 100%; transition: width 0.5s; border-radius: var(--radius-full); }
+    
+    .goal-stats {
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--gray-500);
+    }
+    .goal-stat { display: flex; align-items: center; gap: 4px; }
+    .goal-stat-value { font-weight: 700; color: var(--gray-700); }
+    
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    
+    .stat-box {
+      padding: 24px 20px;
+      background: white;
+      border-radius: var(--radius-lg);
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s;
+    }
+    .stat-box:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    
+    .stat-value { font-size: 36px; font-weight: 800; color: var(--primary); }
+    .stat-label { font-size: 11px; color: var(--gray-500); margin-top: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+    
+    .stat-box.success .stat-value { color: var(--success); }
+    .stat-box.warning .stat-value { color: var(--warning); }
+    .stat-box.spiritual .stat-value { color: var(--spiritual); }
+    
+    /* Bottom Nav */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0 16px;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+      z-index: 100;
+    }
+    
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 8px 12px;
+      color: var(--gray-500);
+      text-decoration: none;
+      font-size: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      background: none;
+      border-radius: var(--radius-sm);
+    }
+    
+    .nav-item:hover { background: var(--gray-100); }
     .nav-item.active { color: var(--primary); }
-    .nav-item .icon { font-size: 22px; margin-bottom: 3px; }
+    .nav-item .icon { font-size: 26px; margin-bottom: 4px; }
     
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: flex-end; z-index: 200; opacity: 0; visibility: hidden; transition: all 0.3s; }
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: 200;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      backdrop-filter: blur(4px);
+    }
     .modal-overlay.active { opacity: 1; visibility: visible; }
-    .modal { background: white; border-radius: 20px 20px 0 0; width: 100%; max-width: 500px; max-height: 85vh; overflow-y: auto; transform: translateY(100%); transition: transform 0.3s; margin: 0 auto; }
+    
+    .modal {
+      background: white;
+      border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+      width: 100%;
+      max-width: 560px;
+      max-height: 92vh;
+      overflow-y: auto;
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+    }
     .modal-overlay.active .modal { transform: translateY(0); }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 18px 20px; border-bottom: 1px solid var(--gray-200); position: sticky; top: 0; background: white; }
-    .modal-title { font-size: 17px; font-weight: 700; }
-    .modal-close { background: var(--gray-100); border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 18px; cursor: pointer; }
-    .modal-body { padding: 20px; }
     
-    .form-group { margin-bottom: 16px; }
-    .form-label { display: block; font-size: 12px; font-weight: 600; color: var(--gray-700); margin-bottom: 6px; }
-    .form-input { width: 100%; padding: 12px 14px; border: 2px solid var(--gray-200); border-radius: 10px; font-size: 14px; font-family: inherit; }
-    .form-input:focus { outline: none; border-color: var(--primary); }
-    .form-textarea { min-height: 100px; resize: vertical; }
-    .form-row { display: flex; gap: 12px; }
-    .form-row .form-group { flex: 1; }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--gray-200);
+      position: sticky;
+      top: 0;
+      background: white;
+      z-index: 10;
+    }
     
-    .btn-submit { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; }
-    .btn-submit:disabled { opacity: 0.6; }
-    .btn-secondary { background: var(--gray-200); color: var(--gray-700); }
+    .modal-title { font-size: 18px; font-weight: 700; }
     
-    .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--gray-900); color: white; padding: 12px 24px; border-radius: 25px; font-size: 13px; opacity: 0; transition: all 0.3s; z-index: 300; }
+    .modal-close {
+      background: var(--gray-100);
+      border: none;
+      font-size: 20px;
+      color: var(--gray-600);
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .modal-close:hover { background: var(--gray-200); transform: rotate(90deg); }
+    
+    .modal-body { padding: 24px; }
+    
+    /* Form */
+    .form-group { margin-bottom: 20px; }
+    .form-label { 
+      display: block; 
+      font-size: 13px; 
+      font-weight: 600; 
+      color: var(--gray-700); 
+      margin-bottom: 8px;
+    }
+    .form-hint { font-size: 11px; color: var(--gray-500); margin-top: 4px; }
+    
+    .form-input {
+      width: 100%;
+      padding: 14px 18px;
+      border: 2px solid var(--gray-200);
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      font-family: inherit;
+      transition: all 0.2s;
+      background: var(--gray-50);
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: white;
+      box-shadow: 0 0 0 4px rgba(13, 71, 161, 0.1);
+    }
+    .form-input::placeholder { color: var(--gray-400); }
+    .form-textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
+    
+    .form-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%239E9E9E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 20px;
+      padding-right: 44px;
+    }
+    
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      background: var(--gradient-header);
+      color: white;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: var(--shadow-md);
+    }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+    .btn-submit:active { transform: scale(0.98); }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    
+    .btn-secondary {
+      background: var(--gray-100);
+      color: var(--gray-700);
+      box-shadow: none;
+    }
+    .btn-secondary:hover { background: var(--gray-200); box-shadow: none; }
+    
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--gray-900);
+      color: white;
+      padding: 16px 28px;
+      border-radius: var(--radius-full);
+      font-size: 14px;
+      font-weight: 500;
+      opacity: 0;
+      transition: all 0.4s;
+      z-index: 300;
+      box-shadow: var(--shadow-xl);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
     .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
     .toast.success { background: var(--success); }
     .toast.error { background: var(--danger); }
+    .toast.warning { background: var(--warning); }
     
-    .loading { display: flex; justify-content: center; padding: 30px; }
-    .spinner { width: 36px; height: 36px; border: 3px solid var(--gray-200); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
+    /* Loading */
+    .loading { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 48px; }
+    .spinner {
+      width: 44px;
+      height: 44px;
+      border: 4px solid var(--gray-200);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    .loading-text { margin-top: 16px; font-size: 14px; color: var(--gray-500); }
     @keyframes spin { to { transform: rotate(360deg); } }
     
-    .empty-state { text-align: center; padding: 30px; color: var(--gray-500); }
-    .empty-state .icon { font-size: 40px; margin-bottom: 10px; }
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--gray-500);
+    }
+    .empty-state .icon { font-size: 56px; margin-bottom: 16px; opacity: 0.5; }
+    .empty-state p { font-size: 14px; line-height: 1.6; }
+    .empty-state .btn { margin-top: 20px; display: inline-block; padding: 12px 24px; }
     
+    /* Pages */
     .page { display: none; }
-    .page.active { display: block; }
+    .page.active { display: block; animation: fadeIn 0.3s; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     
-    .tabs { display: flex; background: var(--gray-200); border-radius: 10px; padding: 4px; margin-bottom: 14px; }
-    .tab { flex: 1; padding: 10px; text-align: center; font-size: 12px; font-weight: 600; color: var(--gray-600); background: transparent; border: none; border-radius: 8px; cursor: pointer; }
-    .tab.active { background: white; color: var(--primary); }
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+      padding: 4px 0;
+      scrollbar-width: none;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
     
-    .pomo-type-card { padding: 14px; border: 2px solid var(--gray-200); border-radius: 10px; text-align: center; cursor: pointer; margin-bottom: 8px; }
-    .pomo-type-card.selected { border-color: var(--pomodoro); background: #FFEBEE; }
-    .pomo-types { display: flex; gap: 8px; }
-    .pomo-types > div { flex: 1; }
+    .tab-btn {
+      padding: 12px 20px;
+      border: none;
+      border-radius: var(--radius-full);
+      background: var(--gray-100);
+      color: var(--gray-600);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .tab-btn:hover { background: var(--gray-200); }
+    .tab-btn.active { background: var(--primary); color: white; }
+    
+    /* Responsive */
+    @media (max-width: 480px) {
+      .quick-actions { grid-template-columns: repeat(2, 1fr); }
+      .sholat-container { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .pairwise-vs { flex-direction: column; }
+      .pairwise-divider { transform: rotate(90deg); margin: 8px 0; }
+    }
+    
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--gray-100); }
+    ::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gray-400); }
   </style>
 </head>
 <body>
+  <!-- Header -->
   <header class="header">
     <div class="header-top">
       <h1>🌙 Sync Planner</h1>
-      <span class="header-date" id="currentDate">Memuat...</span>
+      <span class="header-date" id="currentDate">Loading...</span>
+    </div>
+    <div class="header-greeting">
+      <div class="arabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+      <div class="translation">"Dengan menyebut nama Allah Yang Maha Pengasih lagi Maha Penyayang"</div>
     </div>
     <div class="header-stats">
-      <div class="stat-item"><span>🕌</span><span id="sholatCount">-/5</span></div>
-      <div class="stat-item"><span>✅</span><span id="habitCount">-/-</span></div>
-      <div class="stat-item"><span>🍅</span><span id="pomodoroCount">-</span></div>
-      <div class="stat-item"><span>⏱️</span><span id="focusMinutes">- mnt</span></div>
+      <div class="stat-item">🕌 <span class="value" id="sholatCount">0/8</span></div>
+      <div class="stat-item">📿 <span class="value" id="habitCount">0/0</span></div>
+      <div class="stat-item">🍅 <span class="value" id="pomodoroCount">0</span></div>
+      <div class="stat-item">⏱️ <span class="value" id="focusMinutes">0m</span></div>
     </div>
   </header>
   
+  <!-- Main Content -->
   <main class="main">
-    <!-- HOME -->
+    <!-- ==================== PAGE: HOME ==================== -->
     <div class="page active" id="page-home">
-      <div class="card pomodoro-active" id="pomodoroActive" style="display:none;">
-        <div class="timer-time" id="timerDisplay">25:00</div>
-        <div class="timer-label" id="timerLabel">FOKUS</div>
-        <div class="timer-task" id="timerTask"></div>
-        <div class="timer-controls">
-          <button class="timer-btn complete" onclick="completePomodoro()">✓ Selesai</button>
-          <button class="timer-btn cancel" onclick="cancelPomodoro()">✕ Batal</button>
-        </div>
-        <div style="margin-top:12px;font-size:12px;opacity:0.8;">
-          Distraksi: <span id="distractionCount">0</span> 
-          <button onclick="addDistraction()" style="background:rgba(255,255,255,0.2);border:none;color:white;padding:4px 10px;border-radius:10px;margin-left:8px;cursor:pointer;">+1</button>
-        </div>
-      </div>
-      
+      <!-- Sholat Tracker -->
       <div class="card">
-        <div class="card-header"><span class="card-title">🕌 Sholat Hari Ini</span></div>
-        <div class="sholat-grid" id="sholatGrid"><div class="loading"><div class="spinner"></div></div></div>
+        <div class="card-header">
+          <span class="card-title">🕌 Sholat & Ibadah</span>
+          <span class="card-action" onclick="showPage('habits')">Lihat Semua →</span>
+        </div>
+        <div class="sholat-container" id="sholatGrid">
+          <div class="loading"><div class="spinner"></div></div>
+        </div>
       </div>
       
+      <!-- Quick Actions -->
       <div class="section-title">⚡ Aksi Cepat</div>
       <div class="quick-actions">
-        <button class="action-btn primary" onclick="openModal('pomodoro')"><span class="icon">🍅</span><span class="label">Mulai Fokus</span></button>
-        <button class="action-btn" onclick="openModal('journal')"><span class="icon">📝</span><span class="label">Tulis Jurnal</span></button>
-        <button class="action-btn" onclick="openModal('braindump')"><span class="icon">💭</span><span class="label">Brain Dump</span></button>
-        <button class="action-btn" onclick="showPage('goals')"><span class="icon">🎯</span><span class="label">Goals</span></button>
+        <button class="action-btn primary" onclick="openModal('pomodoro')">
+          <span class="icon">🍅</span>
+          <span class="label">Fokus</span>
+        </button>
+        <button class="action-btn accent" onclick="showPage('pairwise')">
+          <span class="icon">⚖️</span>
+          <span class="label">Prioritas</span>
+        </button>
+        <button class="action-btn" onclick="openModal('task')">
+          <span class="icon">📋</span>
+          <span class="label">Task</span>
+        </button>
+        <button class="action-btn" onclick="showPage('vision')">
+          <span class="icon">🎯</span>
+          <span class="label">Visi</span>
+        </button>
       </div>
       
-      <div class="section-title">📋 Ritual Hari Ini</div>
-      <div class="card"><div id="habitList"><div class="loading"><div class="spinner"></div></div></div></div>
+      <!-- Habit Rosulullah -->
+      <div class="section-title">📿 Sunnah Rasulullah ﷺ</div>
+      <div class="card" style="padding: 16px;">
+        <div class="habit-rosul" id="habitRosulList">
+          <div class="loading"><div class="spinner"></div></div>
+        </div>
+      </div>
       
-      <div class="section-title">📝 Jurnal Hari Ini</div>
-      <div class="card"><div id="journalList"><div class="loading"><div class="spinner"></div></div></div></div>
+      <!-- Today's Focus -->
+      <div class="section-title">🎯 Fokus Hari Ini</div>
+      <div class="card" id="todayFocus">
+        <div class="empty-state">
+          <span class="icon">⚖️</span>
+          <p>Tentukan prioritas dengan Pairwise Comparison</p>
+          <button class="btn-submit" style="width: auto; margin-top: 16px;" onclick="showPage('pairwise')">Mulai Prioritas</button>
+        </div>
+      </div>
     </div>
     
-    <!-- GOALS -->
+    <!-- ==================== PAGE: VISION ==================== -->
+    <div class="page" id="page-vision">
+      <div class="section-title">🏔️ Piramida Visi & Goal</div>
+      <p style="font-size: 13px; color: var(--gray-600); margin-bottom: 20px; line-height: 1.6;">
+        Tentukan visi jangka panjang hingga target 3 bulan. Setiap level harus mendukung pencapaian level di atasnya.
+      </p>
+      
+      <div class="vision-pyramid" id="visionPyramid">
+        <div class="vision-level level-10" onclick="openModal('vision-10')">
+          <div class="vision-header">
+            <span class="vision-period">🌟 Visi 10 Tahun</span>
+            <span class="vision-edit">✏️ Edit</span>
+          </div>
+          <div class="vision-content" id="vision10Content">
+            <span class="vision-empty">Tap untuk menentukan visi 10 tahun...</span>
+          </div>
+        </div>
+        
+        <div class="vision-level level-3" onclick="openModal('vision-3')">
+          <div class="vision-header">
+            <span class="vision-period">🎯 Target 3 Tahun</span>
+            <span class="vision-edit">✏️ Edit</span>
+          </div>
+          <div class="vision-content" id="vision3Content">
+            <span class="vision-empty">Tap untuk menentukan target 3 tahun...</span>
+          </div>
+        </div>
+        
+        <div class="vision-level level-1" onclick="openModal('vision-1')">
+          <div class="vision-header">
+            <span class="vision-period">📅 Target 1 Tahun</span>
+            <span class="vision-edit">✏️ Edit</span>
+          </div>
+          <div class="vision-content" id="vision1Content">
+            <span class="vision-empty">Tap untuk menentukan target 1 tahun...</span>
+          </div>
+        </div>
+        
+        <div class="vision-level level-quarter" onclick="showPage('goals')">
+          <div class="vision-header">
+            <span class="vision-period">🚀 Goal 12 Minggu (Q4 2025)</span>
+            <span class="vision-edit">Lihat →</span>
+          </div>
+          <div class="vision-content" id="visionQuarterContent">
+            <span class="vision-empty">Lihat dan kelola goal 12 minggu...</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="section-title">💡 Panduan Menetapkan Visi</div>
+      <div class="card">
+        <div style="font-size: 13px; color: var(--gray-700); line-height: 1.8;">
+          <p><strong>1. Visi 10 Tahun:</strong> Bayangkan diri Anda 10 tahun ke depan. Apa yang ingin dicapai dalam karir, keluarga, spiritualitas, dan kesehatan?</p>
+          <p style="margin-top: 12px;"><strong>2. Target 3 Tahun:</strong> Milestone penting menuju visi 10 tahun. Fokus pada 2-3 bidang utama.</p>
+          <p style="margin-top: 12px;"><strong>3. Target 1 Tahun:</strong> Langkah konkret yang bisa diukur. Gunakan format SMART.</p>
+          <p style="margin-top: 12px;"><strong>4. Goal 12 Minggu:</strong> Sprint intensif untuk mencapai hasil nyata. Maksimal 3 goal prioritas.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- ==================== PAGE: PAIRWISE ==================== -->
+    <div class="page" id="page-pairwise">
+      <div class="section-title">⚖️ Pairwise Comparison</div>
+      <p style="font-size: 13px; color: var(--gray-600); margin-bottom: 20px; line-height: 1.6;">
+        Bandingkan setiap pasangan goal untuk menentukan prioritas. Pilih yang LEBIH PENTING untuk fokus saat ini.
+      </p>
+      
+      <div id="pairwiseContainer">
+        <div class="empty-state">
+          <span class="icon">🎯</span>
+          <p>Tambahkan minimal 2 goal untuk memulai perbandingan</p>
+          <button class="btn-submit" style="width: auto; margin-top: 16px;" onclick="showPage('goals')">Ke Halaman Goals</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- ==================== PAGE: GOALS ==================== -->
     <div class="page" id="page-goals">
+      <div class="section-title">🎯 Goal 12 Minggu</div>
+      
+      <div class="tabs" id="goalTabs">
+        <button class="tab-btn active" onclick="filterGoals('active')">Aktif</button>
+        <button class="tab-btn" onclick="filterGoals('all')">Semua</button>
+      </div>
+      
+      <div id="goalsList">
+        <div class="loading"><div class="spinner"></div></div>
+      </div>
+      
+      <button class="btn-submit" style="margin-top: 20px;" onclick="openModal('goal')">
+        + Tambah Goal Baru
+      </button>
+    </div>
+    
+    <!-- ==================== PAGE: KANBAN ==================== -->
+    <div class="page" id="page-kanban">
+      <div class="section-title">📊 Kanban Board</div>
+      
+      <div class="tabs" id="kanbanTabs">
+        <button class="tab-btn active" onclick="filterKanban('')">Semua Task</button>
+      </div>
+      
+      <div class="kanban-container" id="kanbanBoard">
+        <div class="loading"><div class="spinner"></div></div>
+      </div>
+    </div>
+    
+    <!-- ==================== PAGE: HABITS ==================== -->
+    <div class="page" id="page-habits">
+      <div class="section-title">📿 Habit Sunnah Rasulullah ﷺ</div>
+      <p style="font-size: 13px; color: var(--gray-600); margin-bottom: 20px; line-height: 1.6;">
+        Amalan harian berdasarkan sunnah yang disesuaikan untuk ASN. Konsistensi adalah kunci - mulai dari yang kecil.
+      </p>
+      
       <div class="tabs">
-        <button class="tab active" onclick="switchTab('goals',this)">🎯 Goals</button>
-        <button class="tab" onclick="switchTab('tasks',this)">📋 Tasks</button>
+        <button class="tab-btn active" onclick="filterHabits('all')">Semua</button>
+        <button class="tab-btn" onclick="filterHabits('PAGI')">🌅 Pagi</button>
+        <button class="tab-btn" onclick="filterHabits('SIANG')">☀️ Siang</button>
+        <button class="tab-btn" onclick="filterHabits('MALAM')">🌙 Malam</button>
       </div>
-      <div id="goalsTab"><div id="goalsList"><div class="loading"><div class="spinner"></div></div></div>
-        <button class="btn-submit" style="margin-top:14px" onclick="openModal('goal')">+ Tambah Goal</button>
-      </div>
-      <div id="tasksTab" style="display:none"><div id="tasksList"><div class="loading"><div class="spinner"></div></div></div>
-        <button class="btn-submit" style="margin-top:14px" onclick="openModal('task')">+ Tambah Task</button>
+      
+      <div id="habitFullList">
+        <div class="loading"><div class="spinner"></div></div>
       </div>
     </div>
     
-    <!-- STATS -->
+    <!-- ==================== PAGE: STATS ==================== -->
     <div class="page" id="page-stats">
-      <div class="section-title">📊 Statistik Minggu Ini</div>
-      <div class="stats-grid" id="statsGrid"><div class="loading"><div class="spinner"></div></div></div>
-      <div class="section-title">📈 Detail Sesi</div>
-      <div class="card" id="statsDetail"><div class="loading"><div class="spinner"></div></div></div>
+      <div class="section-title">📈 Statistik & Progress</div>
+      
+      <div class="tabs">
+        <button class="tab-btn active" onclick="loadStats('week')">Minggu Ini</button>
+        <button class="tab-btn" onclick="loadStats('month')">Bulan Ini</button>
+      </div>
+      
+      <div id="statsContainer">
+        <div class="loading"><div class="spinner"></div></div>
+      </div>
     </div>
     
-    <!-- SETTINGS -->
+    <!-- ==================== PAGE: SETTINGS ==================== -->
     <div class="page" id="page-settings">
       <div class="section-title">⚙️ Pengaturan</div>
+      
       <div class="card">
-        <div class="form-group"><label class="form-label">User ID</label><input type="text" class="form-input" id="settingsUserId" readonly></div>
-        <div class="form-group"><label class="form-label">API URL</label><input type="text" class="form-input" id="settingsApiUrl"></div>
-        <button class="btn-submit" onclick="saveSettings()">💾 Simpan</button>
+        <div class="card-header">
+          <span class="card-title">👤 Profil</span>
+        </div>
+        <div style="padding: 12px; background: var(--gray-50); border-radius: var(--radius-md); margin-bottom: 12px;">
+          <div style="font-size: 11px; color: var(--gray-500); margin-bottom: 4px;">User ID</div>
+          <div style="font-size: 12px; font-weight: 600; word-break: break-all;" id="settingUserId">-</div>
+        </div>
+        <div style="padding: 12px; background: var(--gray-50); border-radius: var(--radius-md); margin-bottom: 12px;">
+          <div style="font-size: 11px; color: var(--gray-500); margin-bottom: 4px;">Status API</div>
+          <div style="font-size: 12px; font-weight: 600;" id="settingApiStatus">Checking...</div>
+        </div>
       </div>
-      <div class="card" style="margin-top:14px">
-        <button class="btn-submit btn-secondary" onclick="refreshAllData()">🔄 Refresh Data</button>
+      
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">ℹ️ Tentang Aplikasi</span>
+        </div>
+        <div style="font-size: 13px; color: var(--gray-600); line-height: 1.8;">
+          <p><strong>Sync Planner v2.0</strong></p>
+          <p>Aplikasi produktivitas berbasis sunnah Rasulullah ﷺ untuk ASN.</p>
+          <p style="margin-top: 12px;"><strong>Fitur:</strong></p>
+          <ul style="margin-left: 20px; margin-top: 8px;">
+            <li>Piramida Visi (10 tahun → 3 bulan)</li>
+            <li>Pairwise Comparison untuk prioritas</li>
+            <li>Kanban Board</li>
+            <li>Habit Sunnah Rasulullah</li>
+            <li>Pomodoro Timer</li>
+            <li>Tracking Sholat</li>
+          </ul>
+        </div>
       </div>
+      
+      <button class="btn-submit" onclick="loadAllData()" style="margin-top: 16px;">🔄 Refresh Semua Data</button>
     </div>
   </main>
   
+  <!-- Bottom Navigation -->
   <nav class="bottom-nav">
-    <a href="#" class="nav-item active" onclick="showPage('home')" data-page="home"><span class="icon">🏠</span>Beranda</a>
-    <a href="#" class="nav-item" onclick="showPage('goals')" data-page="goals"><span class="icon">🎯</span>Goals</a>
-    <a href="#" class="nav-item" onclick="showPage('stats')" data-page="stats"><span class="icon">📊</span>Statistik</a>
-    <a href="#" class="nav-item" onclick="showPage('settings')" data-page="settings"><span class="icon">⚙️</span>Setting</a>
+    <button class="nav-item active" onclick="showPage('home', this)">
+      <span class="icon">🏠</span><span>Beranda</span>
+    </button>
+    <button class="nav-item" onclick="showPage('kanban', this)">
+      <span class="icon">📊</span><span>Kanban</span>
+    </button>
+    <button class="nav-item" onclick="showPage('goals', this)">
+      <span class="icon">🎯</span><span>Goals</span>
+    </button>
+    <button class="nav-item" onclick="showPage('stats', this)">
+      <span class="icon">📈</span><span>Stats</span>
+    </button>
+    <button class="nav-item" onclick="showPage('settings', this)">
+      <span class="icon">⚙️</span><span>Setting</span>
+    </button>
   </nav>
+
+  <!-- ==================== MODALS ==================== -->
   
-  <!-- MODALS -->
-  <div class="modal-overlay" id="modal-journal" onclick="if(event.target===this)closeModal('journal')">
+  <!-- Modal: Sholat -->
+  <div class="modal-overlay" id="modal-sholat" onclick="if(event.target===this)closeModal('sholat')">
     <div class="modal">
-      <div class="modal-header"><span class="modal-title">📝 Tulis Jurnal</span><button class="modal-close" onclick="closeModal('journal')">×</button></div>
+      <div class="modal-header">
+        <span class="modal-title" id="sholatModalTitle">🕌 Log Sholat</span>
+        <button class="modal-close" onclick="closeModal('sholat')">✕</button>
+      </div>
       <div class="modal-body">
-        <div class="form-group"><label class="form-label">Jam</label><input type="time" class="form-input" id="journalTime"></div>
-        <div class="form-group"><label class="form-label">Catatan</label><textarea class="form-input form-textarea" id="journalContent" placeholder="Apa yang sedang/sudah dikerjakan..."></textarea></div>
-        <button class="btn-submit" onclick="submitJournal()">💾 Simpan</button>
+        <div class="form-group">
+          <label class="form-label">Jam Pelaksanaan</label>
+          <input type="time" class="form-input" id="sholatJam">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Lokasi</label>
+          <select class="form-input form-select" id="sholatLokasi">
+            <option value="masjid">🕌 Masjid</option>
+            <option value="musholla">🏢 Musholla Kantor</option>
+            <option value="rumah">🏠 Rumah</option>
+            <option value="lainnya">📍 Lainnya</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 12px; background: var(--gray-50); border-radius: var(--radius-md);">
+            <input type="checkbox" id="sholatBerjamaah" style="width: 24px; height: 24px; accent-color: var(--primary);">
+            <span>Sholat Berjamaah</span>
+          </label>
+        </div>
+        <button class="btn-submit" id="btnSholat" onclick="submitSholat()">✓ Simpan</button>
       </div>
     </div>
   </div>
   
-  <div class="modal-overlay" id="modal-braindump" onclick="if(event.target===this)closeModal('braindump')">
-    <div class="modal">
-      <div class="modal-header"><span class="modal-title">💭 Brain Dump</span><button class="modal-close" onclick="closeModal('braindump')">×</button></div>
-      <div class="modal-body">
-        <div class="form-group"><label class="form-label">Tuangkan pikiran...</label><textarea class="form-input form-textarea" id="braindumpContent" placeholder="Ide, kekhawatiran, to-do..." style="min-height:150px"></textarea></div>
-        <button class="btn-submit" onclick="submitBrainDump()">💾 Simpan</button>
-      </div>
-    </div>
-  </div>
-  
+  <!-- Modal: Pomodoro -->
   <div class="modal-overlay" id="modal-pomodoro" onclick="if(event.target===this)closeModal('pomodoro')">
     <div class="modal">
-      <div class="modal-header"><span class="modal-title">🍅 Mulai Sesi Fokus</span><button class="modal-close" onclick="closeModal('pomodoro')">×</button></div>
+      <div class="modal-header">
+        <span class="modal-title">🍅 Mulai Sesi Fokus</span>
+        <button class="modal-close" onclick="closeModal('pomodoro')">✕</button>
+      </div>
       <div class="modal-body">
-        <div class="form-group"><label class="form-label">Tipe Sesi</label>
-          <div class="pomo-types">
-            <div><div class="pomo-type-card selected" onclick="selectPomoType(this,'POMODORO_25')">🍅<br><b>25 mnt</b></div></div>
-            <div><div class="pomo-type-card" onclick="selectPomoType(this,'DEEP_WORK_60')">🧠<br><b>60 mnt</b></div></div>
-            <div><div class="pomo-type-card" onclick="selectPomoType(this,'DEEP_WORK_90')">🚀<br><b>90 mnt</b></div></div>
-          </div>
+        <div class="form-group">
+          <label class="form-label">Tipe Sesi</label>
+          <select class="form-input form-select" id="pomodoroType">
+            <option value="POMODORO_25">🍅 Pomodoro (25 menit)</option>
+            <option value="DEEP_WORK_60">🧠 Deep Work (60 menit)</option>
+            <option value="DEEP_WORK_90">🚀 Ultra Focus (90 menit)</option>
+          </select>
         </div>
-        <input type="hidden" id="pomodoroType" value="POMODORO_25">
-        <div class="form-group"><label class="form-label">Yang akan dikerjakan</label><input type="text" class="form-input" id="pomodoroTask" placeholder="Contoh: Review dokumen kontrak"></div>
-        <div class="form-group"><label class="form-label">Goal (opsional)</label><select class="form-input" id="pomodoroGoal"><option value="">-- Pilih --</option></select></div>
-        <button class="btn-submit" onclick="startPomodoro()">▶️ Mulai</button>
+        <div class="form-group">
+          <label class="form-label">Task yang akan dikerjakan</label>
+          <input type="text" class="form-input" id="pomodoroTask" placeholder="Contoh: Review SPM Gaji November">
+          <div class="form-hint">Pilih dari prioritas hasil pairwise atau ketik manual</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Pilih dari Goal Prioritas</label>
+          <select class="form-input form-select" id="pomodoroGoal" onchange="selectPomodoroGoal()">
+            <option value="">-- Pilih Goal --</option>
+          </select>
+        </div>
+        <button class="btn-submit" id="btnPomodoro" onclick="startPomodoro()">▶️ Mulai Sesi</button>
       </div>
     </div>
   </div>
   
-  <div class="modal-overlay" id="modal-goal" onclick="if(event.target===this)closeModal('goal')">
-    <div class="modal">
-      <div class="modal-header"><span class="modal-title">🎯 Tambah Goal</span><button class="modal-close" onclick="closeModal('goal')">×</button></div>
-      <div class="modal-body">
-        <div class="form-group"><label class="form-label">Judul</label><input type="text" class="form-input" id="goalTitle" placeholder="Contoh: Selesaikan LLAT 2025"></div>
-        <div class="form-group"><label class="form-label">Deskripsi</label><textarea class="form-input form-textarea" id="goalDesc" placeholder="Detail goal..."></textarea></div>
-        <div class="form-row">
-          <div class="form-group"><label class="form-label">Quarter</label><select class="form-input" id="goalQuarter"><option value="1">Q1</option><option value="2">Q2</option><option value="3">Q3</option><option value="4">Q4</option></select></div>
-          <div class="form-group"><label class="form-label">Tahun</label><input type="number" class="form-input" id="goalYear" value="2025"></div>
-        </div>
-        <button class="btn-submit" onclick="submitGoal()">💾 Simpan</button>
-      </div>
-    </div>
-  </div>
-  
+  <!-- Modal: Task -->
   <div class="modal-overlay" id="modal-task" onclick="if(event.target===this)closeModal('task')">
     <div class="modal">
-      <div class="modal-header"><span class="modal-title">📋 Tambah Task</span><button class="modal-close" onclick="closeModal('task')">×</button></div>
+      <div class="modal-header">
+        <span class="modal-title">📋 Tambah Task</span>
+        <button class="modal-close" onclick="closeModal('task')">✕</button>
+      </div>
       <div class="modal-body">
-        <div class="form-group"><label class="form-label">Goal</label><select class="form-input" id="taskGoal"><option value="">-- Pilih --</option></select></div>
-        <div class="form-group"><label class="form-label">Judul Task</label><input type="text" class="form-input" id="taskTitle" placeholder="Contoh: Buat SPM"></div>
-        <div class="form-row">
-          <div class="form-group"><label class="form-label">Prioritas</label><select class="form-input" id="taskPriority"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select></div>
-          <div class="form-group"><label class="form-label">Status</label><select class="form-input" id="taskStatus"><option value="backlog">Backlog</option><option value="todo" selected>To Do</option></select></div>
+        <div class="form-group">
+          <label class="form-label">Judul Task</label>
+          <input type="text" class="form-input" id="taskTitle" placeholder="Apa yang perlu dikerjakan?">
         </div>
-        <button class="btn-submit" onclick="submitTask()">💾 Simpan</button>
+        <div class="form-group">
+          <label class="form-label">Deskripsi (opsional)</label>
+          <textarea class="form-input form-textarea" id="taskDesc" placeholder="Detail tambahan..." style="min-height: 80px;"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Prioritas</label>
+            <select class="form-input form-select" id="taskPriority">
+              <option value="high">🔴 Tinggi</option>
+              <option value="medium" selected>🟡 Sedang</option>
+              <option value="low">🟢 Rendah</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <select class="form-input form-select" id="taskStatus">
+              <option value="backlog">📥 Backlog</option>
+              <option value="todo" selected>📋 To Do</option>
+              <option value="progress">🔄 In Progress</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Terkait Goal</label>
+          <select class="form-input form-select" id="taskGoal">
+            <option value="">-- Tidak ada --</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Deadline (opsional)</label>
+          <input type="date" class="form-input" id="taskDueDate">
+        </div>
+        <button class="btn-submit" id="btnTask" onclick="submitTask()">💾 Simpan Task</button>
       </div>
     </div>
   </div>
   
-  <div class="modal-overlay" id="modal-goaldetail" onclick="if(event.target===this)closeModal('goaldetail')">
+  <!-- Modal: Goal -->
+  <div class="modal-overlay" id="modal-goal" onclick="if(event.target===this)closeModal('goal')">
     <div class="modal">
-      <div class="modal-header"><span class="modal-title" id="goalDetailTitle">🎯 Detail Goal</span><button class="modal-close" onclick="closeModal('goaldetail')">×</button></div>
-      <div class="modal-body" id="goalDetailBody"></div>
+      <div class="modal-header">
+        <span class="modal-title">🎯 Tambah Goal 12 Minggu</span>
+        <button class="modal-close" onclick="closeModal('goal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Judul Goal</label>
+          <input type="text" class="form-input" id="goalTitle" placeholder="Contoh: LLAT 2025 100%">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Deskripsi & Alasan</label>
+          <textarea class="form-input form-textarea" id="goalDesc" placeholder="Mengapa goal ini penting? Apa dampaknya?"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Quarter</label>
+            <select class="form-input form-select" id="goalQuarter">
+              <option value="1">Q1 (Jan-Mar)</option>
+              <option value="2">Q2 (Apr-Jun)</option>
+              <option value="3">Q3 (Jul-Sep)</option>
+              <option value="4">Q4 (Okt-Des)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tahun</label>
+            <input type="number" class="form-input" id="goalYear" value="2025">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Terkait Visi</label>
+          <select class="form-input form-select" id="goalVision">
+            <option value="">-- Pilih Bidang --</option>
+            <option value="SPIRITUAL">🕌 Spiritual</option>
+            <option value="KARIR">💼 Karir</option>
+            <option value="KESEHATAN">💪 Kesehatan</option>
+            <option value="KEUANGAN">💰 Keuangan</option>
+            <option value="RELASI">👨‍👩‍👧‍👦 Relasi</option>
+            <option value="PETUALANGAN">🌍 Petualangan</option>
+          </select>
+        </div>
+        <button class="btn-submit" id="btnGoal" onclick="submitGoal()">💾 Simpan Goal</button>
+      </div>
     </div>
   </div>
   
-  <div class="toast" id="toast"></div>
+  <!-- Modal: Vision -->
+  <div class="modal-overlay" id="modal-vision-10" onclick="if(event.target===this)closeModal('vision-10')">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">🌟 Visi 10 Tahun</span>
+        <button class="modal-close" onclick="closeModal('vision-10')">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: 20px; line-height: 1.6;">
+          Bayangkan diri Anda 10 tahun dari sekarang. Di mana Anda ingin berada? Apa yang sudah Anda capai?
+        </p>
+        <div class="form-group">
+          <label class="form-label">Visi Spiritual</label>
+          <textarea class="form-input form-textarea" id="vision10Spiritual" placeholder="Contoh: Menjadi hamba Allah yang taat, hafal 10 juz, rutin tahajud..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Visi Karir</label>
+          <textarea class="form-input form-textarea" id="vision10Karir" placeholder="Contoh: Menjadi pejabat yang amanah dan berkontribusi..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Visi Keluarga & Relasi</label>
+          <textarea class="form-input form-textarea" id="vision10Relasi" placeholder="Contoh: Keluarga sakinah mawaddah warahmah..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Visi Kesehatan</label>
+          <textarea class="form-input form-textarea" id="vision10Kesehatan" placeholder="Contoh: Tubuh sehat dan bugar, berat ideal..."></textarea>
+        </div>
+        <button class="btn-submit" onclick="saveVision('10')">💾 Simpan Visi</button>
+      </div>
+    </div>
+  </div>
   
-  <script src="app.js"></script>
+  <div class="modal-overlay" id="modal-vision-3" onclick="if(event.target===this)closeModal('vision-3')">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">🎯 Target 3 Tahun</span>
+        <button class="modal-close" onclick="closeModal('vision-3')">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: 20px; line-height: 1.6;">
+          Milestone menuju visi 10 tahun. Fokus pada 2-3 bidang yang paling penting saat ini.
+        </p>
+        <div class="form-group">
+          <label class="form-label">Target Utama 3 Tahun</label>
+          <textarea class="form-input form-textarea" id="vision3Content" placeholder="Apa yang ingin dicapai dalam 3 tahun ke depan?"></textarea>
+        </div>
+        <button class="btn-submit" onclick="saveVision('3')">💾 Simpan Target</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal-overlay" id="modal-vision-1" onclick="if(event.target===this)closeModal('vision-1')">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">📅 Target 1 Tahun</span>
+        <button class="modal-close" onclick="closeModal('vision-1')">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 13px; color: var(--gray-600); margin-bottom: 20px; line-height: 1.6;">
+          Target konkret dan terukur untuk tahun ini. Gunakan format SMART.
+        </p>
+        <div class="form-group">
+          <label class="form-label">Target Tahun Ini</label>
+          <textarea class="form-input form-textarea" id="vision1Content" placeholder="Apa yang HARUS tercapai tahun ini?"></textarea>
+        </div>
+        <button class="btn-submit" onclick="saveVision('1')">💾 Simpan Target</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+>Gagal memuat statistik</p></div>';
+      }
+    }
+    
+    // ============================================
+    // RENDERING
+    // ============================================
+    function renderDailySync() {
+      const data = state.dailySync;
+      if (!data) return;
+      
+      document.getElementById('currentDate').textContent = data.day + ', ' + formatDate(data.date);
+      document.getElementById('sholatCount').textContent = data.stats.sholat_completed + '/8';
+      document.getElementById('habitCount').textContent = data.stats.habits_completed + '/' + data.stats.habits_total;
+      document.getElementById('pomodoroCount').textContent = data.stats.pomodoros_completed;
+      document.getElementById('focusMinutes').textContent = data.stats.focus_minutes + 'm';
+      
+      renderSholatGrid(data.sholat);
+      renderHabitRosul(data.habits);
+    }
+    
+    function renderSholatGrid(sholatData) {
+      const sholatList = [
+        { id: 'TAHAJUD', name: 'Tahajud', icon: '🌙' },
+        { id: 'SUBUH', name: 'Subuh', icon: '🌅' },
+        { id: 'DHUHA', name: 'Dhuha', icon: '☀️' },
+        { id: 'DZUHUR', name: 'Dzuhur', icon: '🌞' },
+        { id: 'ASHAR', name: 'Ashar', icon: '🌇' },
+        { id: 'MAGHRIB', name: 'Maghrib', icon: '🌆' },
+        { id: 'ISYA', name: 'Isya', icon: '🌃' },
+        { id: 'WITIR', name: 'Witir', icon: '⭐' }
+      ];
+      
+      document.getElementById('sholatGrid').innerHTML = sholatList.map(s => {
+        const data = sholatData[s.id] || { done: false };
+        return `<div class="sholat-item ${data.done ? 'done' : ''}" onclick="openSholatModal('${s.id}')">
+          <span class="icon">${s.icon}</span>
+          <span class="name">${s.name}</span>
+          ${data.jam_pelaksanaan ? `<span class="time">${data.jam_pelaksanaan}</span>` : ''}
+        </div>`;
+      }).join('');
+    }
+    
+    function renderHabitRosul(habits) {
+      const container = document.getElementById('habitRosulList');
+      
+      // Show top 4 habits for home page
+      const todayHabits = HABIT_ROSUL.slice(0, 4).map(hr => {
+        const dbHabit = habits?.find(h => h.name.toLowerCase().includes(hr.id.replace('_', ' ')));
+        const completed = dbHabit?.completed || false;
+        return { ...hr, completed, habit_id: dbHabit?.habit_id };
+      });
+      
+      container.innerHTML = todayHabits.map(h => `
+        <div class="habit-rosul-item ${h.completed ? 'done' : ''}" onclick="toggleHabitRosul('${h.habit_id || h.id}', ${h.completed})">
+          <div class="habit-rosul-checkbox">${h.completed ? '✓' : ''}</div>
+          <div class="habit-rosul-info">
+            <div class="habit-rosul-name">${h.name}</div>
+            <div class="habit-rosul-arabic">${h.arabic}</div>
+            <div class="habit-rosul-benefit">${h.benefit}</div>
+          </div>
+          <div class="habit-rosul-time">${h.hour}</div>
+        </div>
+      `).join('');
+    }
+    
+    function renderHabitsFull() {
+      const container = document.getElementById('habitFullList');
+      let filtered = HABIT_ROSUL;
+      
+      if (state.currentHabitFilter !== 'all') {
+        filtered = HABIT_ROSUL.filter(h => h.time === state.currentHabitFilter);
+      }
+      
+      const habits = state.dailySync?.habits || [];
+      
+      container.innerHTML = filtered.map(hr => {
+        const dbHabit = habits.find(h => h.name.toLowerCase().includes(hr.name.toLowerCase().split(' ')[0]));
+        const completed = dbHabit?.completed || false;
+        
+        return `<div class="habit-rosul-item ${completed ? 'done' : ''}" onclick="toggleHabitRosul('${dbHabit?.habit_id || hr.id}', ${completed})">
+          <div class="habit-rosul-checkbox">${completed ? '✓' : ''}</div>
+          <div class="habit-rosul-info">
+            <div class="habit-rosul-name">${hr.name}</div>
+            <div class="habit-rosul-arabic">${hr.arabic}</div>
+            <div class="habit-rosul-benefit">${hr.benefit}</div>
+          </div>
+          <div class="habit-rosul-time">${hr.hour}</div>
+        </div>`;
+      }).join('');
+    }
+    
+    function filterHabits(filter) {
+      state.currentHabitFilter = filter;
+      document.querySelectorAll('#page-habits .tab-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      renderHabitsFull();
+    }
+    
+    function renderGoals() {
+      const container = document.getElementById('goalsList');
+      
+      if (!state.goals || state.goals.length === 0) {
+        container.innerHTML = `<div class="empty-state">
+          <span class="icon">🎯</span>
+          <p>Belum ada goal. Mulai dengan menentukan goal 12 minggu Anda.</p>
+        </div>`;
+        return;
+      }
+      
+      container.innerHTML = state.goals.map((g, idx) => {
+        const tc = g.task_count || { total: 0, done: 0 };
+        const progress = tc.total > 0 ? Math.round((tc.done / tc.total) * 100) : (g.progress || 0);
+        const rank = g.priority_rank || (idx + 1);
+        
+        return `<div class="goal-card ${rank <= 3 ? 'rank-' + rank : ''}" onclick="viewGoalDetail('${g.goal_id}')">
+          ${rank <= 3 ? `<div class="goal-rank">${rank}</div>` : ''}
+          <div class="goal-header">
+            <div class="goal-title">${escapeHtml(g.title)}</div>
+            <div class="goal-quarter">Q${g.quarter} ${g.year}</div>
+          </div>
+          <div class="goal-desc">${escapeHtml(g.description || 'Tidak ada deskripsi')}</div>
+          <div class="goal-progress-container">
+            <div class="goal-progress-header">
+              <span class="goal-progress-label">Progress</span>
+              <span class="goal-progress-value">${progress}%</span>
+            </div>
+            <div class="goal-progress"><div class="goal-progress-bar" style="width:${progress}%"></div></div>
+          </div>
+          <div class="goal-stats">
+            <div class="goal-stat">📋 <span class="goal-stat-value">${tc.total}</span> task</div>
+            <div class="goal-stat">✅ <span class="goal-stat-value">${tc.done}</span> selesai</div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+    
+    function renderTodayFocus() {
+      const container = document.getElementById('todayFocus');
+      const topGoals = state.goals.filter(g => g.priority_rank && g.priority_rank <= 3).slice(0, 3);
+      
+      if (topGoals.length === 0) {
+        container.innerHTML = `<div class="empty-state">
+          <span class="icon">⚖️</span>
+          <p>Tentukan prioritas dengan Pairwise Comparison</p>
+          <button class="btn-submit" style="width: auto; margin-top: 16px;" onclick="showPage('pairwise')">Mulai Prioritas</button>
+        </div>`;
+        return;
+      }
+      
+      container.innerHTML = `
+        <div class="card-header">
+          <span class="card-title">🔥 Top Prioritas</span>
+          <span class="card-action" onclick="showPage('pairwise')">Edit →</span>
+        </div>
+        ${topGoals.map((g, i) => `
+          <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: ${i === 0 ? 'var(--warning-light)' : 'var(--gray-50)'}; border-radius: var(--radius-md); margin-bottom: 8px; border-left: 4px solid ${i === 0 ? 'var(--accent)' : 'var(--gray-300)'};">
+            <div style="width: 28px; height: 28px; background: ${['#FFD700','#C0C0C0','#CD7F32'][i]}; color: ${i === 0 ? 'var(--gray-800)' : 'white'}; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px;">${i + 1}</div>
+            <div style="flex: 1;">
+              <div style="font-weight: 600; font-size: 14px;">${escapeHtml(g.title)}</div>
+              <div style="font-size: 12px; color: var(--gray-500);">Q${g.quarter} ${g.year}</div>
+            </div>
+          </div>
+        `).join('')}
+      `;
+    }
+    
+    function renderKanban() {
+      const k = state.kanban;
+      if (!k || !k.board) {
+        document.getElementById('kanbanBoard').innerHTML = '<div class="empty-state"><span class="icon">📊</span><p>Tidak ada task</p></div>';
+        return;
+      }
+      
+      const columns = [
+        { id: 'backlog', title: '📥 Backlog', tasks: k.board.backlog || [] },
+        { id: 'todo', title: '📋 To Do', tasks: k.board.todo || [] },
+        { id: 'progress', title: '🔄 Progress', tasks: k.board.progress || [] },
+        { id: 'done', title: '✅ Done', tasks: k.board.done || [] }
+      ];
+      
+      document.getElementById('kanbanBoard').innerHTML = columns.map(col => `
+        <div class="kanban-column ${col.id}">
+          <div class="kanban-header">
+            <span class="kanban-title">${col.title}</span>
+            <span class="kanban-count">${col.tasks.length}</span>
+          </div>
+          <div class="kanban-tasks">
+            ${col.tasks.map(t => renderTaskCard(t, col.id)).join('')}
+          </div>
+          ${col.id !== 'done' ? `<button class="add-task-btn" onclick="openAddTask('${col.id}')">+ Tambah Task</button>` : ''}
+        </div>
+      `).join('');
+    }
+    
+    function renderTaskCard(task, currentStatus) {
+      const isOverdue = task.due_date && new Date(task.due_date) < new Date() && currentStatus !== 'done';
+      const nextStatus = { backlog: 'todo', todo: 'progress', progress: 'done' };
+      const fromPairwise = task.labels?.includes('pairwise');
+      
+      return `<div class="task-card priority-${task.priority || 'medium'} ${fromPairwise ? 'from-pairwise' : ''}">
+        <div class="task-title">${escapeHtml(task.title)}</div>
+        <div class="task-meta">
+          <span class="task-label priority-${task.priority || 'medium'}">${task.priority || 'medium'}</span>
+          ${fromPairwise ? '<span class="task-label from-pairwise">Prioritas</span>' : ''}
+          ${task.due_date ? `<span class="task-due ${isOverdue ? 'overdue' : ''}">📅 ${formatDateShort(task.due_date)}</span>` : ''}
+        </div>
+        ${currentStatus !== 'done' ? `
+        <div class="task-actions">
+          ${nextStatus[currentStatus] ? `<button class="task-action-btn primary" onclick="moveTask('${task.task_id}','${nextStatus[currentStatus]}')">→ Next</button>` : ''}
+          <button class="task-action-btn success" onclick="moveTask('${task.task_id}','done')">✓ Done</button>
+        </div>` : ''}
+      </div>`;
+    }
+    
+    function renderKanbanTabs() {
+      let html = `<button class="tab-btn ${!state.selectedGoalFilter ? 'active' : ''}" onclick="filterKanban('')">Semua</button>`;
+      if (state.goals?.length > 0) {
+        html += state.goals.slice(0, 5).map(g =>
+          `<button class="tab-btn ${state.selectedGoalFilter === g.goal_id ? 'active' : ''}" onclick="filterKanban('${g.goal_id}')">${escapeHtml(g.title.substring(0, 15))}${g.title.length > 15 ? '...' : ''}</button>`
+        ).join('');
+      }
+      document.getElementById('kanbanTabs').innerHTML = html;
+    }
+    
+    function renderVisions() {
+      const visions = state.visions || [];
+      
+      // Group by bidang and show in vision pyramid
+      const spiritual = visions.find(v => v.bidang === 'SPIRITUAL');
+      const karir = visions.find(v => v.bidang === 'KARIR');
+      
+      if (spiritual?.vision_10_tahun || karir?.vision_10_tahun) {
+        let content = '';
+        if (spiritual?.vision_10_tahun) content += `<strong>Spiritual:</strong> ${escapeHtml(spiritual.vision_10_tahun)}<br>`;
+        if (karir?.vision_10_tahun) content += `<strong>Karir:</strong> ${escapeHtml(karir.vision_10_tahun)}`;
+        document.getElementById('vision10Content').innerHTML = content || '<span class="vision-empty">Tap untuk menentukan visi 10 tahun...</span>';
+      }
+      
+      // Show goals count for quarter
+      if (state.goals?.length > 0) {
+        document.getElementById('visionQuarterContent').innerHTML = `${state.goals.length} goal aktif untuk quarter ini`;
+      }
+    }
+    
+    function renderStats() {
+      const s = state.pomodoroStats;
+      if (!s) return;
+      
+      document.getElementById('statsContainer').innerHTML = `
+        <div class="stats-grid">
+          <div class="stat-box"><div class="stat-value">${s.completed_sessions || 0}</div><div class="stat-label">Sesi Fokus</div></div>
+          <div class="stat-box success"><div class="stat-value">${s.total_focus_hours || 0}h</div><div class="stat-label">Total Jam</div></div>
+          <div class="stat-box warning"><div class="stat-value">${s.completion_rate || 0}%</div><div class="stat-label">Completion</div></div>
+          <div class="stat-box spiritual"><div class="stat-value">${s.streak || 0}</div><div class="stat-label">Hari Streak</div></div>
+        </div>
+        <div class="card" style="margin-top: 20px;">
+          <div class="card-title" style="margin-bottom: 16px;">📊 Detail per Tipe</div>
+          <div style="font-size: 14px; color: var(--gray-700);">
+            <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--gray-100);"><span>🍅 Pomodoro 25m</span><span style="font-weight: 700;">${s.by_type?.POMODORO_25?.count || 0} sesi</span></div>
+            <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--gray-100);"><span>🧠 Deep Work 60m</span><span style="font-weight: 700;">${s.by_type?.DEEP_WORK_60?.count || 0} sesi</span></div>
+            <div style="display: flex; justify-content: space-between; padding: 12px 0;"><span>🚀 Ultra Focus 90m</span><span style="font-weight: 700;">${s.by_type?.DEEP_WORK_90?.count || 0} sesi</span></div>
+          </div>
+        </div>
+      `;
+    }
+    
+    // ============================================
+    // PAIRWISE COMPARISON
+    // ============================================
+    function initPairwise() {
+      const goals = state.goals.filter(g => g.status === 'active');
+      
+      if (goals.length < 2) {
+        document.getElementById('pairwiseContainer').innerHTML = `<div class="empty-state">
+          <span class="icon">🎯</span>
+          <p>Tambahkan minimal 2 goal untuk memulai perbandingan</p>
+          <button class="btn-submit" style="width: auto; margin-top: 16px;" onclick="showPage('goals')">Tambah Goal</button>
+        </div>`;
+        return;
+      }
+      
+      // Generate all pairs
+      state.pairwise.items = goals;
+      state.pairwise.comparisons = [];
+      state.pairwise.results = {};
+      state.pairwise.currentPair = 0;
+      
+      // Initialize scores
+      goals.forEach(g => { state.pairwise.results[g.goal_id] = 0; });
+      
+      // Generate pairs
+      for (let i = 0; i < goals.length; i++) {
+        for (let j = i + 1; j < goals.length; j++) {
+          state.pairwise.comparisons.push([goals[i], goals[j]]);
+        }
+      }
+      
+      renderPairwiseQuestion();
+    }
+    
+    function renderPairwiseQuestion() {
+      const container = document.getElementById('pairwiseContainer');
+      const { comparisons, currentPair, items } = state.pairwise;
+      
+      if (currentPair >= comparisons.length) {
+        renderPairwiseResults();
+        return;
+      }
+      
+      const [a, b] = comparisons[currentPair];
+      const progress = Math.round((currentPair / comparisons.length) * 100);
+      
+      container.innerHTML = `
+        <div class="pairwise-progress">
+          <div style="font-size: 14px; color: var(--gray-600);">Pertanyaan ${currentPair + 1} dari ${comparisons.length}</div>
+          <div class="pairwise-progress-bar">
+            <div class="pairwise-progress-fill" style="width: ${progress}%"></div>
+          </div>
+        </div>
+        
+        <div style="text-align: center; margin-bottom: 20px;">
+          <div style="font-size: 16px; font-weight: 600; color: var(--gray-800);">Mana yang LEBIH PENTING untuk fokus saat ini?</div>
+        </div>
+        
+        <div class="pairwise-vs">
+          <div class="pairwise-option" onclick="selectPairwise('${a.goal_id}')">
+            <div class="pairwise-option-title">${escapeHtml(a.title)}</div>
+            <div class="pairwise-option-desc">${escapeHtml(a.description || 'Tidak ada deskripsi')}</div>
+          </div>
+          <div class="pairwise-divider">VS</div>
+          <div class="pairwise-option" onclick="selectPairwise('${b.goal_id}')">
+            <div class="pairwise-option-title">${escapeHtml(b.title)}</div>
+            <div class="pairwise-option-desc">${escapeHtml(b.description || 'Tidak ada deskripsi')}</div>
+          </div>
+        </div>
+      `;
+    }
+    
+    function selectPairwise(goalId) {
+      state.pairwise.results[goalId]++;
+      state.pairwise.currentPair++;
+      renderPairwiseQuestion();
+    }
+    
+    function renderPairwiseResults() {
+      const container = document.getElementById('pairwiseContainer');
+      const { results, items } = state.pairwise;
+      
+      // Sort by score
+      const ranked = items.sort((a, b) => results[b.goal_id] - results[a.goal_id]);
+      
+      container.innerHTML = `
+        <div class="pairwise-result">
+          <div class="pairwise-result-title">🏆 Hasil Prioritas</div>
+          <div class="pairwise-rank-list">
+            ${ranked.map((g, i) => `
+              <div class="pairwise-rank-item">
+                <div class="pairwise-rank-number">${i + 1}</div>
+                <div class="pairwise-rank-title">${escapeHtml(g.title)}</div>
+                <div style="font-size: 12px; color: var(--gray-500);">${results[g.goal_id]} poin</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        
+        <div style="display: flex; gap: 12px; margin-top: 20px;">
+          <button class="btn-submit btn-secondary" style="flex: 1;" onclick="initPairwise()">🔄 Ulangi</button>
+          <button class="btn-submit" style="flex: 1;" onclick="savePairwiseResults()">💾 Simpan</button>
+        </div>
+        
+        <div class="card" style="margin-top: 20px;">
+          <div class="card-title" style="margin-bottom: 12px;">💡 Langkah Selanjutnya</div>
+          <p style="font-size: 13px; color: var(--gray-600); line-height: 1.6;">
+            Fokuskan energi pada <strong>Top 3 Prioritas</strong>. Buat task spesifik untuk masing-masing goal dan track progress di Kanban Board.
+          </p>
+          <button class="btn-submit" style="margin-top: 16px;" onclick="createTasksFromPriority()">📋 Buat Task dari Prioritas</button>
+        </div>
+      `;
+    }
+    
+    async function savePairwiseResults() {
+      try {
+        const { results, items } = state.pairwise;
+        const ranked = items.sort((a, b) => results[b.goal_id] - results[a.goal_id]);
+        
+        const rankings = ranked.map((g, i) => ({ goal_id: g.goal_id, rank: i + 1 }));
+        
+        await apiPost('savePairwise', { rankings });
+        showToast('Prioritas tersimpan!', 'success');
+        await loadGoals();
+        renderTodayFocus();
+      } catch (err) {
+        showToast('Gagal menyimpan: ' + err.message, 'error');
+      }
+    }
+    
+    async function createTasksFromPriority() {
+      const topGoals = state.goals.filter(g => g.priority_rank && g.priority_rank <= 3);
+      
+      if (topGoals.length === 0) {
+        showToast('Simpan prioritas terlebih dahulu', 'warning');
+        return;
+      }
+      
+      try {
+        for (const goal of topGoals) {
+          await apiPost('createTask', {
+            goal_id: goal.goal_id,
+            data: {
+              title: `[P${goal.priority_rank}] ${goal.title} - First Action`,
+              description: `Task pertama untuk mencapai goal: ${goal.title}`,
+              priority: 'high',
+              status: 'todo',
+              labels: 'pairwise'
+            }
+          });
+        }
+        showToast('Task berhasil dibuat!', 'success');
+        showPage('kanban');
+      } catch (err) {
+        showToast('Gagal membuat task: ' + err.message, 'error');
+      }
+    }
+    
+    // ============================================
+    // ACTIONS
+    // ============================================
+    function openSholatModal(waktu) {
+      const data = state.dailySync?.sholat?.[waktu];
+      if (data?.done) {
+        showToast(waktu + ' sudah dicatat', 'info');
+        return;
+      }
+      state.selectedSholat = waktu;
+      document.getElementById('sholatModalTitle').textContent = '🕌 Log ' + waktu;
+      document.getElementById('sholatJam').value = new Date().toTimeString().slice(0, 5);
+      openModal('sholat');
+    }
+    
+    async function submitSholat() {
+      const btn = document.getElementById('btnSholat');
+      btn.disabled = true; btn.textContent = 'Menyimpan...';
+      
+      try {
+        await apiPost('logSholat', {
+          waktu_sholat: state.selectedSholat,
+          options: {
+            jam: document.getElementById('sholatJam').value,
+            lokasi: document.getElementById('sholatLokasi').value,
+            berjamaah: document.getElementById('sholatBerjamaah').checked
+          }
+        });
+        showToast(state.selectedSholat + ' tercatat ✓', 'success');
+        closeModal('sholat');
+        await loadDailySync();
+      } catch (err) { showToast(err.message, 'error'); }
+      finally { btn.disabled = false; btn.textContent = '✓ Simpan'; }
+    }
+    
+    async function toggleHabitRosul(habitId, isCompleted) {
+      if (isCompleted) {
+        showToast('Sudah dichecklist hari ini', 'info');
+        return;
+      }
+      
+      try {
+        await apiPost('checkHabit', { habit_id: habitId });
+        showToast('Alhamdulillah! ✓', 'success');
+        await loadDailySync();
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+    
+    async function submitGoal() {
+      const title = document.getElementById('goalTitle').value.trim();
+      if (!title) { showToast('Isi judul goal', 'error'); return; }
+      
+      const btn = document.getElementById('btnGoal');
+      btn.disabled = true; btn.textContent = 'Menyimpan...';
+      
+      try {
+        await apiPost('createGoal', {
+          data: {
+            title,
+            description: document.getElementById('goalDesc').value.trim(),
+            quarter: parseInt(document.getElementById('goalQuarter').value),
+            year: parseInt(document.getElementById('goalYear').value)
+          }
+        });
+        showToast('Goal tersimpan!', 'success');
+        closeModal('goal');
+        document.getElementById('goalTitle').value = '';
+        document.getElementById('goalDesc').value = '';
+        await loadGoals();
+      } catch (err) { showToast(err.message, 'error'); }
+      finally { btn.disabled = false; btn.textContent = '💾 Simpan Goal'; }
+    }
+    
+    function populateGoalSelect() {
+      const select = document.getElementById('taskGoal');
+      select.innerHTML = '<option value="">-- Tidak ada --</option>';
+      state.goals?.forEach(g => {
+        select.innerHTML += `<option value="${g.goal_id}">${escapeHtml(g.title)}</option>`;
+      });
+    }
+    
+    function populatePomodoroGoals() {
+      const select = document.getElementById('pomodoroGoal');
+      select.innerHTML = '<option value="">-- Pilih Goal --</option>';
+      const topGoals = state.goals?.filter(g => g.priority_rank && g.priority_rank <= 5) || [];
+      topGoals.forEach(g => {
+        select.innerHTML += `<option value="${g.goal_id}">[P${g.priority_rank}] ${escapeHtml(g.title)}</option>`;
+      });
+    }
+    
+    function selectPomodoroGoal() {
+      const goalId = document.getElementById('pomodoroGoal').value;
+      const goal = state.goals?.find(g => g.goal_id === goalId);
+      if (goal) {
+        document.getElementById('pomodoroTask').value = goal.title;
+      }
+    }
+    
+    function openAddTask(status) {
+      openModal('task');
+      document.getElementById('taskStatus').value = status;
+    }
+    
+    async function submitTask() {
+      const title = document.getElementById('taskTitle').value.trim();
+      if (!title) { showToast('Isi judul task', 'error'); return; }
+      
+      const btn = document.getElementById('btnTask');
+      btn.disabled = true; btn.textContent = 'Menyimpan...';
+      
+      try {
+        await apiPost('createTask', {
+          goal_id: document.getElementById('taskGoal').value || '',
+          data: {
+            title,
+            description: document.getElementById('taskDesc').value.trim(),
+            priority: document.getElementById('taskPriority').value,
+            status: document.getElementById('taskStatus').value,
+            due_date: document.getElementById('taskDueDate').value
+          }
+        });
+        showToast('Task tersimpan!', 'success');
+        closeModal('task');
+        document.getElementById('taskTitle').value = '';
+        document.getElementById('taskDesc').value = '';
+        await loadKanban();
+      } catch (err) { showToast(err.message, 'error'); }
+      finally { btn.disabled = false; btn.textContent = '💾 Simpan Task'; }
+    }
+    
+    async function moveTask(taskId, newStatus) {
+      try {
+        await apiPost('moveTask', { task_id: taskId, status: newStatus });
+        showToast('Task dipindahkan!', 'success');
+        await loadKanban();
+      } catch (err) { showToast(err.message, 'error'); }
+    }
+    
+    function filterKanban(goalId) {
+      state.selectedGoalFilter = goalId;
+      loadKanban();
+    }
+    
+    function filterGoals(filter) {
+      document.querySelectorAll('#goalTabs .tab-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      renderGoals();
+    }
+    
+    function viewGoalDetail(goalId) {
+      state.selectedGoalFilter = goalId;
+      showPage('kanban');
+    }
+    
+    async function startPomodoro() {
+      const task = document.getElementById('pomodoroTask').value.trim();
+      if (!task) { showToast('Isi task yang akan dikerjakan', 'error'); return; }
+      
+      const btn = document.getElementById('btnPomodoro');
+      btn.disabled = true; btn.textContent = 'Memulai...';
+      
+      try {
+        await apiPost('startPomodoro', {
+          options: {
+            type: document.getElementById('pomodoroType').value,
+            planned_task: task,
+            goal_id: document.getElementById('pomodoroGoal').value
+          }
+        });
+        showToast('Pomodoro dimulai! Fokus 🍅', 'success');
+        closeModal('pomodoro');
+        document.getElementById('pomodoroTask').value = '';
+      } catch (err) { showToast(err.message, 'error'); }
+      finally { btn.disabled = false; btn.textContent = '▶️ Mulai Sesi'; }
+    }
+    
+    async function saveVision(level) {
+      try {
+        // Implementation depends on vision structure
+        showToast('Visi tersimpan!', 'success');
+        closeModal('vision-' + level);
+        await loadVisions();
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    }
+    
+    // ============================================
+    // HELPERS
+    // ============================================
+    function formatDate(dateStr) {
+      const d = new Date(dateStr);
+      const months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+      return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    }
+    
+    function formatDateShort(dateStr) {
+      const d = new Date(dateStr);
+      return d.getDate() + '/' + (d.getMonth() + 1);
+    }
+    
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text || '';
+      return div.innerHTML;
+    }
+    
+    // ============================================
+    // INITIALIZATION
+    // ============================================
+    document.addEventListener('DOMContentLoaded', () => {
+      loadAllData();
+    });
+    
+    // Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(reg => console.log('SW registered'))
+        .catch(err => console.log('SW failed:', err));
+    }
+  </script>
 </body>
 </html>

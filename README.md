@@ -1,199 +1,148 @@
-# Sync Planner PWA - Frontend
+# 🌙 Sync Planner - Produktivitas Islami untuk ASN
 
-Aplikasi web progresif (PWA) untuk Sync Planner yang bisa diakses via HP dan Laptop.
+Aplikasi produktivitas berbasis sunnah Rasulullah ﷺ untuk Aparatur Sipil Negara (ASN).
 
-## Fitur
+## ✨ Fitur Utama
 
-✅ Dashboard harian dengan statistik
-✅ Tracking sholat 5 waktu + sunnah
-✅ Checklist habit/ritual harian
-✅ Input jurnal per jam
-✅ Brain dump
-✅ Pomodoro timer (25/60/90 menit)
-✅ Manajemen goal 12 minggu
-✅ Statistik pomodoro mingguan
-✅ Responsive design (mobile-first)
-✅ Installable (PWA)
+### 🏔️ Piramida Visi & Goal
+- **Visi 10 Tahun** - Tujuan jangka panjang kehidupan
+- **Target 3 Tahun** - Milestone menuju visi
+- **Target 1 Tahun** - Rencana tahunan yang terukur
+- **Goal 12 Minggu** - Sprint intensif untuk hasil nyata
 
----
+### ⚖️ Pairwise Comparison
+Metode ilmiah untuk menentukan prioritas dengan membandingkan setiap pasangan goal. Hasil prioritas otomatis tersimpan dan bisa diubah menjadi task di Kanban.
 
-## Cara Deploy
+### 📊 Kanban Board
+- 4 kolom: Backlog, To Do, In Progress, Done
+- Filter per goal
+- Prioritas dari hasil pairwise ditandai khusus
+- Quick move antar kolom
 
-### Opsi 1: GitHub Pages (GRATIS & Mudah) ⭐ Rekomendasi
+### 📿 Habit Sunnah Rasulullah ﷺ
+Amalan harian berdasarkan sunnah yang disesuaikan untuk ASN:
+- Sholat Tahajud (03:30)
+- Subuh Berjamaah (04:30)
+- Dzikir Pagi (05:00)
+- Tilawah Al-Quran (05:30)
+- Sholat Dhuha (07:00)
+- Rawatib Dzuhur (12:00)
+- Dzikir Sore (16:00)
+- Maghrib & Isya Berjamaah
+- Sholat Witir (21:00)
+- Muhasabah/Evaluasi Diri (21:30)
 
-1. **Buat akun GitHub** (jika belum punya)
-   - Buka https://github.com
-   - Sign up
+### 🕌 Tracking Sholat
+Pantau sholat wajib dan sunnah dengan detail:
+- Jam pelaksanaan
+- Lokasi (Masjid/Musholla/Rumah)
+- Status berjamaah
 
-2. **Buat repository baru**
-   - Klik tombol "+" → "New repository"
-   - Nama: `sync-planner`
-   - Pilih "Public"
-   - Klik "Create repository"
+### 🍅 Pomodoro Timer
+- Pomodoro 25 menit
+- Deep Work 60 menit
+- Ultra Focus 90 menit
+- Terhubung dengan goal prioritas
 
-3. **Upload file**
-   - Klik "uploading an existing file"
-   - Drag & drop semua file:
-     - `index.html`
-     - `app.js`
-     - `sw.js`
-     - `manifest.json`
-     - `icon-192.png`
-     - `icon-512.png`
-   - Klik "Commit changes"
+### 📈 Statistik & Progress
+- Sesi fokus mingguan
+- Streak harian
+- Completion rate
+- Detail per tipe pomodoro
 
-4. **Aktifkan GitHub Pages**
-   - Klik tab "Settings"
-   - Scroll ke "Pages" di sidebar kiri
-   - Source: pilih "main" branch
-   - Klik "Save"
+## 🚀 Cara Menggunakan
 
-5. **Akses aplikasi**
-   - Tunggu 1-2 menit
-   - URL: `https://[username].github.io/sync-planner`
+### Deploy ke GitHub Pages
 
----
+1. **Fork repository ini** atau buat repository baru
 
-### Opsi 2: Netlify (GRATIS)
+2. **Upload semua file:**
+   - `index.html`
+   - `manifest.json`
+   - `sw.js`
+   - `icons/` (folder dengan icon)
 
-1. Buka https://netlify.com
-2. Sign up dengan GitHub
-3. Klik "Add new site" → "Deploy manually"
-4. Drag & drop folder `sync_planner_pwa`
-5. Selesai! Dapat URL otomatis
+3. **Aktifkan GitHub Pages:**
+   - Settings → Pages
+   - Source: main branch
+   - Save
 
----
+4. **Akses aplikasi:**
+   ```
+   https://[username].github.io/[repo-name]
+   ```
 
-### Opsi 3: Vercel (GRATIS)
+### Install di HP (PWA)
 
-1. Buka https://vercel.com
-2. Sign up dengan GitHub
-3. Import repository
-4. Deploy otomatis
+**Android (Chrome):**
+1. Buka URL di Chrome
+2. Tap menu ⋮ → "Add to Home screen"
+3. Beri nama → Add
 
----
+**iPhone (Safari):**
+1. Buka URL di Safari
+2. Tap Share 📤 → "Add to Home Screen"
+3. Beri nama → Add
 
-### Opsi 4: Google Drive (Alternatif Sederhana)
+## ⚙️ Konfigurasi
 
-1. Upload semua file ke Google Drive
-2. Gunakan DriveToWeb (https://drv.tw) untuk hosting
-3. Atau gunakan Google Sites embed
+Edit bagian CONFIG di `index.html`:
 
----
-
-## Konfigurasi
-
-Setelah deploy, buka aplikasi dan:
-
-1. Klik tab **⚙️ Pengaturan**
-2. Pastikan **User ID** sudah benar: `7b53f70b-2793-4b64-98de-32188223c0dc`
-3. Pastikan **API URL** sudah benar
-4. Klik **Simpan**
-
----
-
-## Install di HP (PWA)
-
-### Android (Chrome)
-1. Buka URL aplikasi di Chrome
-2. Tap menu ⋮ (titik tiga)
-3. Pilih "Add to Home screen"
-4. Beri nama & tap "Add"
-5. Icon akan muncul di home screen
-
-### iPhone (Safari)
-1. Buka URL aplikasi di Safari
-2. Tap icon Share 📤
-3. Scroll & tap "Add to Home Screen"
-4. Beri nama & tap "Add"
-5. Icon akan muncul di home screen
-
----
-
-## Penggunaan
-
-### Beranda
-- **Sholat**: Tap untuk mencatat sholat yang sudah dilaksanakan
-- **Habit**: Tap untuk checklist ritual harian
-- **Jurnal**: Input catatan per jam
-- **Brain Dump**: Tuangkan pikiran random
-
-### Goals
-- Lihat goal 12 minggu aktif
-- Tambah goal baru
-- Lihat progress task
-
-### Statistik
-- Lihat statistik pomodoro mingguan
-- Streak, total fokus, completion rate
-
-### Pengaturan
-- Edit User ID dan API URL jika perlu
-
----
-
-## Troubleshooting
-
-**"Failed to fetch" atau API Error**
-- Cek koneksi internet
-- Pastikan API URL benar
-- Cek apakah Apps Script masih aktif
-
-**Data tidak update**
-- Pull-to-refresh atau reload halaman
-- Cek console browser untuk error
-
-**Tidak bisa install di HP**
-- Pastikan menggunakan HTTPS
-- Gunakan Chrome (Android) atau Safari (iPhone)
-- Clear cache browser
-
----
-
-## Pengembangan Lanjutan
-
-Untuk menambah fitur:
-
-1. Edit `app.js` untuk logika
-2. Edit `index.html` untuk tampilan
-3. Commit & push ke GitHub
-4. GitHub Pages akan auto-update
-
----
-
-## Tech Stack
-
-- HTML5
-- CSS3 (No framework, pure CSS)
-- JavaScript (Vanilla JS, no framework)
-- PWA (Service Worker)
-- Google Apps Script (Backend)
-- Google Sheets (Database)
-
----
-
-## Customization
-
-### Ganti Warna Tema
-
-Edit CSS variables di `index.html`:
-
-```css
-:root {
-  --primary: #1565C0;      /* Warna utama */
-  --primary-dark: #0D47A1; /* Warna utama gelap */
-  --success: #2E7D32;      /* Hijau */
-  --warning: #F57C00;      /* Orange */
-  --danger: #C62828;       /* Merah */
-}
+```javascript
+const CONFIG = {
+  API_URL: 'YOUR_APPS_SCRIPT_URL',
+  USER_ID: 'YOUR_USER_ID'
+};
 ```
 
-### Ganti Icon
+## 🏗️ Tech Stack
 
-Buat icon PNG 192x192 dan 512x512, replace file:
-- `icon-192.png`
-- `icon-512.png`
+- **Frontend:** Vanilla HTML/CSS/JavaScript (No framework)
+- **Backend:** Google Apps Script
+- **Database:** Google Sheets
+- **PWA:** Service Worker untuk offline support
+
+## 📱 Screenshot
+
+```
+┌────────────────────────────────────┐
+│  🌙 Sync Planner                   │
+│  Jumat, 28 November 2025           │
+├────────────────────────────────────┤
+│                                    │
+│  🕌 Sholat & Ibadah                │
+│  ┌────┬────┬────┬────┐             │
+│  │🌙  │🌅  │☀️  │🌞  │             │
+│  │    │ ✓  │ ✓  │    │             │
+│  └────┴────┴────┴────┘             │
+│                                    │
+│  ⚡ Aksi Cepat                      │
+│  ┌──────┬──────┬──────┬──────┐     │
+│  │ 🍅   │ ⚖️   │ 📋   │ 🎯   │     │
+│  │Fokus │Prior │Task  │Visi  │     │
+│  └──────┴──────┴──────┴──────┘     │
+│                                    │
+│  📿 Sunnah Rasulullah ﷺ           │
+│  ┌──────────────────────────┐      │
+│  │ ☐ Sholat Tahajud   03:30 │      │
+│  │ ✓ Subuh Berjamaah  04:30 │      │
+│  │ ✓ Dzikir Pagi      05:00 │      │
+│  │ ☐ Sholat Dhuha     07:00 │      │
+│  └──────────────────────────┘      │
+│                                    │
+├────────────────────────────────────┤
+│ 🏠   📊   🎯   📈   ⚙️           │
+└────────────────────────────────────┘
+```
+
+## 🤲 Doa Penutup
+
+رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ
+
+*"Ya Tuhan kami, berilah kami kebaikan di dunia dan kebaikan di akhirat, dan lindungilah kami dari azab neraka."* (QS. Al-Baqarah: 201)
 
 ---
 
-Created for Sync Planner by Firdaus
+**Dibuat untuk produktivitas yang berkah 🌙**
+
+© 2025 Sync Planner
