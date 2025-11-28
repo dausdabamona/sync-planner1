@@ -1,1199 +1,359 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#0f172a">
-    <meta name="description" content="Sync Planner - Integrasi Perencanaan Harian Islami & Manajemen Tugas dengan Kanban Board">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Sync Planner">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1565C0">
+  <meta name="description" content="Sync Planner - Produktivitas Islami">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Sync Planner</title>
+  
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #1565C0;
+      --primary-dark: #0D47A1;
+      --success: #2E7D32;
+      --success-light: #E8F5E9;
+      --warning: #F57C00;
+      --warning-light: #FFF3E0;
+      --danger: #C62828;
+      --gray-50: #FAFAFA;
+      --gray-100: #F5F5F5;
+      --gray-200: #EEEEEE;
+      --gray-300: #E0E0E0;
+      --gray-500: #9E9E9E;
+      --gray-600: #757575;
+      --gray-700: #616161;
+      --gray-900: #212121;
+      --spiritual: #7B1FA2;
+      --spiritual-light: #F3E5F5;
+      --tubuh: #00838F;
+      --tubuh-light: #E0F7FA;
+      --pikiran: #EF6C00;
+      --pikiran-light: #FFF3E0;
+      --pomodoro: #E53935;
+    }
     
-    <title>Sync Planner + Kanban Board</title>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="manifest.json">
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--gray-100);
+      color: var(--gray-900);
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
     
-    <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+    .header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-top { display: flex; justify-content: space-between; align-items: center; }
+    .header h1 { font-size: 20px; }
+    .header-date { font-size: 14px; opacity: 0.9; }
+    .header-stats { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+    .stat-item { background: rgba(255,255,255,0.15); padding: 6px 12px; border-radius: 20px; font-size: 12px; display: flex; align-items: center; gap: 5px; }
     
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    .main { padding: 16px; max-width: 600px; margin: 0 auto; }
     
-    <!-- Styles -->
-    <link rel="stylesheet" href="styles.css">
+    .card { background: white; border-radius: 14px; padding: 16px; margin-bottom: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .card-title { font-size: 15px; font-weight: 600; }
+    
+    .sholat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .sholat-item { display: flex; flex-direction: column; align-items: center; padding: 12px 6px; border-radius: 10px; background: var(--gray-50); border: 2px solid var(--gray-200); cursor: pointer; transition: all 0.2s; position: relative; }
+    .sholat-item:active { transform: scale(0.95); }
+    .sholat-item.done { background: var(--success-light); border-color: var(--success); }
+    .sholat-item .icon { font-size: 22px; margin-bottom: 4px; }
+    .sholat-item .name { font-size: 10px; font-weight: 600; color: var(--gray-700); }
+    .sholat-item.done .name { color: var(--success); }
+    .sholat-item .time { font-size: 9px; color: var(--gray-500); }
+    
+    .section-title { font-size: 12px; font-weight: 700; color: var(--gray-500); text-transform: uppercase; margin: 20px 0 10px; }
+    
+    .quick-actions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .action-btn { display: flex; flex-direction: column; align-items: center; padding: 20px; background: white; border: none; border-radius: 14px; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+    .action-btn:active { transform: scale(0.96); }
+    .action-btn .icon { font-size: 30px; margin-bottom: 8px; }
+    .action-btn .label { font-size: 12px; font-weight: 600; color: var(--gray-700); }
+    .action-btn.primary { background: linear-gradient(135deg, var(--pomodoro), #C62828); }
+    .action-btn.primary .label { color: white; }
+    
+    .habit-item { display: flex; align-items: center; padding: 12px; background: var(--gray-50); border-radius: 10px; margin-bottom: 8px; cursor: pointer; border: 2px solid transparent; }
+    .habit-item:active { transform: scale(0.98); }
+    .habit-item.done { background: var(--success-light); border-color: var(--success); }
+    .habit-checkbox { width: 24px; height: 24px; border: 2px solid var(--gray-300); border-radius: 50%; margin-right: 12px; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+    .habit-item.done .habit-checkbox { background: var(--success); border-color: var(--success); color: white; }
+    .habit-info { flex: 1; }
+    .habit-name { font-size: 13px; font-weight: 500; }
+    .habit-meta { font-size: 11px; color: var(--gray-500); }
+    .habit-badge { font-size: 9px; padding: 3px 8px; border-radius: 10px; font-weight: 600; }
+    .badge-spiritual { background: var(--spiritual-light); color: var(--spiritual); }
+    .badge-tubuh { background: var(--tubuh-light); color: var(--tubuh); }
+    .badge-pikiran { background: var(--pikiran-light); color: var(--pikiran); }
+    
+    .journal-entry { padding: 12px; background: var(--gray-50); border-radius: 10px; margin-bottom: 8px; border-left: 3px solid var(--primary); }
+    .journal-time { font-size: 11px; color: var(--primary); font-weight: 600; margin-bottom: 4px; }
+    .journal-content { font-size: 13px; line-height: 1.5; }
+    
+    .pomodoro-active { background: linear-gradient(135deg, var(--pomodoro), #C62828); color: white; text-align: center; padding: 20px; }
+    .timer-time { font-size: 48px; font-weight: 700; }
+    .timer-label { font-size: 13px; opacity: 0.9; margin-top: 4px; }
+    .timer-task { font-size: 13px; opacity: 0.8; margin-top: 8px; }
+    .timer-controls { display: flex; justify-content: center; gap: 10px; margin-top: 16px; }
+    .timer-btn { padding: 12px 28px; border: none; border-radius: 25px; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .timer-btn.complete { background: white; color: var(--pomodoro); }
+    .timer-btn.cancel { background: rgba(255,255,255,0.2); color: white; }
+    
+    .goal-card { background: white; border-radius: 14px; padding: 14px; margin-bottom: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); border-left: 4px solid var(--primary); cursor: pointer; }
+    .goal-card:active { transform: scale(0.98); }
+    .goal-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+    .goal-desc { font-size: 12px; color: var(--gray-600); margin-bottom: 10px; }
+    .goal-progress { background: var(--gray-200); border-radius: 4px; height: 6px; overflow: hidden; }
+    .goal-progress-bar { background: var(--success); height: 100%; }
+    .goal-stats { font-size: 11px; color: var(--gray-500); margin-top: 8px; display: flex; justify-content: space-between; }
+    
+    .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .stat-card { background: white; border-radius: 14px; padding: 20px; text-align: center; }
+    .stat-value { font-size: 32px; font-weight: 700; color: var(--primary); }
+    .stat-label { font-size: 11px; color: var(--gray-500); margin-top: 4px; }
+    
+    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; display: flex; justify-content: space-around; padding: 8px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 100; }
+    .nav-item { display: flex; flex-direction: column; align-items: center; padding: 8px 16px; color: var(--gray-500); text-decoration: none; font-size: 10px; font-weight: 600; }
+    .nav-item.active { color: var(--primary); }
+    .nav-item .icon { font-size: 22px; margin-bottom: 3px; }
+    
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: flex-end; z-index: 200; opacity: 0; visibility: hidden; transition: all 0.3s; }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .modal { background: white; border-radius: 20px 20px 0 0; width: 100%; max-width: 500px; max-height: 85vh; overflow-y: auto; transform: translateY(100%); transition: transform 0.3s; margin: 0 auto; }
+    .modal-overlay.active .modal { transform: translateY(0); }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 18px 20px; border-bottom: 1px solid var(--gray-200); position: sticky; top: 0; background: white; }
+    .modal-title { font-size: 17px; font-weight: 700; }
+    .modal-close { background: var(--gray-100); border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 18px; cursor: pointer; }
+    .modal-body { padding: 20px; }
+    
+    .form-group { margin-bottom: 16px; }
+    .form-label { display: block; font-size: 12px; font-weight: 600; color: var(--gray-700); margin-bottom: 6px; }
+    .form-input { width: 100%; padding: 12px 14px; border: 2px solid var(--gray-200); border-radius: 10px; font-size: 14px; font-family: inherit; }
+    .form-input:focus { outline: none; border-color: var(--primary); }
+    .form-textarea { min-height: 100px; resize: vertical; }
+    .form-row { display: flex; gap: 12px; }
+    .form-row .form-group { flex: 1; }
+    
+    .btn-submit { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; }
+    .btn-submit:disabled { opacity: 0.6; }
+    .btn-secondary { background: var(--gray-200); color: var(--gray-700); }
+    
+    .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--gray-900); color: white; padding: 12px 24px; border-radius: 25px; font-size: 13px; opacity: 0; transition: all 0.3s; z-index: 300; }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    .toast.success { background: var(--success); }
+    .toast.error { background: var(--danger); }
+    
+    .loading { display: flex; justify-content: center; padding: 30px; }
+    .spinner { width: 36px; height: 36px; border: 3px solid var(--gray-200); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    
+    .empty-state { text-align: center; padding: 30px; color: var(--gray-500); }
+    .empty-state .icon { font-size: 40px; margin-bottom: 10px; }
+    
+    .page { display: none; }
+    .page.active { display: block; }
+    
+    .tabs { display: flex; background: var(--gray-200); border-radius: 10px; padding: 4px; margin-bottom: 14px; }
+    .tab { flex: 1; padding: 10px; text-align: center; font-size: 12px; font-weight: 600; color: var(--gray-600); background: transparent; border: none; border-radius: 8px; cursor: pointer; }
+    .tab.active { background: white; color: var(--primary); }
+    
+    .pomo-type-card { padding: 14px; border: 2px solid var(--gray-200); border-radius: 10px; text-align: center; cursor: pointer; margin-bottom: 8px; }
+    .pomo-type-card.selected { border-color: var(--pomodoro); background: #FFEBEE; }
+    .pomo-types { display: flex; gap: 8px; }
+    .pomo-types > div { flex: 1; }
+  </style>
 </head>
 <body>
-    <!-- Theme Toggle -->
-    <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
-        <span class="theme-icon">🌙</span>
-    </button>
-
-    <!-- Sync Status Indicator -->
-    <div class="sync-indicator" id="sync-indicator">
-        <span class="sync-icon">🔄</span>
-        <span class="sync-text">Syncing...</span>
+  <header class="header">
+    <div class="header-top">
+      <h1>🌙 Sync Planner</h1>
+      <span class="header-date" id="currentDate">Memuat...</span>
     </div>
-
-    <!-- PWA Install Banner -->
-    <div class="pwa-install-banner" id="pwa-install-banner">
-        <div class="pwa-install-info">
-            <span class="pwa-install-icon">📱</span>
-            <div class="pwa-install-text">
-                <h4>Install Sync Planner</h4>
-                <p>Akses offline & pengalaman lebih baik</p>
-            </div>
-        </div>
-        <div class="pwa-install-actions">
-            <button class="pwa-btn pwa-btn-dismiss" onclick="dismissPWABanner()">Nanti</button>
-            <button class="pwa-btn pwa-btn-install" onclick="installPWA()">Install</button>
-        </div>
+    <div class="header-stats">
+      <div class="stat-item"><span>🕌</span><span id="sholatCount">-/5</span></div>
+      <div class="stat-item"><span>✅</span><span id="habitCount">-/-</span></div>
+      <div class="stat-item"><span>🍅</span><span id="pomodoroCount">-</span></div>
+      <div class="stat-item"><span>⏱️</span><span id="focusMinutes">- mnt</span></div>
     </div>
-
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-content">
-                <div class="header-brand">
-                    <span class="header-icon">🎯</span>
-                    <div>
-                        <h1>Sync Planner</h1>
-                        <p class="header-tagline">Produktivitas Berbasis Ibadah</p>
-                    </div>
-                </div>
-                <div class="header-date" id="current-date"></div>
-            </div>
-        </header>
-
-        <!-- Navigation -->
-        <nav class="nav-tabs">
-            <button class="nav-tab active" data-tab="planner" onclick="switchTab('planner')">
-                <span class="nav-icon">📅</span>
-                <span class="nav-text">Planner</span>
-            </button>
-            <button class="nav-tab" data-tab="pomodoro" onclick="switchTab('pomodoro')">
-                <span class="nav-icon">🍅</span>
-                <span class="nav-text">Pomodoro</span>
-            </button>
-            <button class="nav-tab" data-tab="pairwise" onclick="switchTab('pairwise')">
-                <span class="nav-icon">⚖️</span>
-                <span class="nav-text">Prioritas</span>
-            </button>
-            <button class="nav-tab" data-tab="kanban" onclick="switchTab('kanban')">
-                <span class="nav-icon">📋</span>
-                <span class="nav-text">Kanban</span>
-            </button>
-            <button class="nav-tab" data-tab="progress" onclick="switchTab('progress')">
-                <span class="nav-icon">📊</span>
-                <span class="nav-text">Progres</span>
-            </button>
-            <button class="nav-tab" data-tab="settings" onclick="switchTab('settings')">
-                <span class="nav-icon">⚙️</span>
-                <span class="nav-text">Settings</span>
-            </button>
-        </nav>
-
-        <!-- ==================== SYNC PLANNER TAB ==================== -->
-        <div id="planner-tab" class="tab-content active">
-            <div class="planner-grid">
-                <!-- Morning Routine -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon icon-tahajud">🌙</div>
-                        <h2 class="card-title">Rutinitas Tahajud & Subuh</h2>
-                    </div>
-                    
-                    <div class="time-block">
-                        <span class="time-label">03:30</span>
-                        <div class="time-content">
-                            <div class="time-title">Bangun Tahajud</div>
-                            <div class="time-desc">Wudhu, sholat tahajud 2-8 rakaat</div>
-                        </div>
-                    </div>
-                    
-                    <div class="time-block">
-                        <span class="time-label">04:00</span>
-                        <div class="time-content">
-                            <div class="time-title">Dzikir & Doa</div>
-                            <div class="time-desc">Istighfar, tasbih, tawakkal</div>
-                        </div>
-                    </div>
-                    
-                    <div class="time-block">
-                        <span class="time-label">04:30</span>
-                        <div class="time-content">
-                            <div class="time-title">Sholat Subuh</div>
-                            <div class="time-desc">Berjamaah + dzikir pagi</div>
-                        </div>
-                    </div>
-                    
-                    <div class="time-block">
-                        <span class="time-label">05:00</span>
-                        <div class="time-content">
-                            <div class="time-title">Refleksi Stoic</div>
-                            <div class="time-desc">Premeditatio malorum, journaling</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Daily Checklist -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon icon-morning">☀️</div>
-                        <h2 class="card-title">Checklist Harian</h2>
-                    </div>
-                    
-                    <div id="checklist-container">
-                        <div class="checklist-item" onclick="toggleCheck(this)" data-index="0">
-                            <div class="checkbox">✓</div>
-                            <span class="check-text">Tahajud minimal 2 rakaat</span>
-                        </div>
-                        <div class="checklist-item" onclick="toggleCheck(this)" data-index="1">
-                            <div class="checkbox">✓</div>
-                            <span class="check-text">Sholat Subuh berjamaah</span>
-                        </div>
-                        <div class="checklist-item" onclick="toggleCheck(this)" data-index="2">
-                            <div class="checkbox">✓</div>
-                            <span class="check-text">Dzikir pagi</span>
-                        </div>
-                        <div class="checklist-item" onclick="toggleCheck(this)" data-index="3">
-                            <div class="checkbox">✓</div>
-                            <span class="check-text">Olahraga 15-30 menit</span>
-                        </div>
-                        <div class="checklist-item" onclick="toggleCheck(this)" data-index="4">
-                            <div class="checkbox">✓</div>
-                            <span class="check-text">3 MIT (Most Important Tasks)</span>
-                        </div>
-                        <div class="checklist-item" onclick="toggleCheck(this)" data-index="5">
-                            <div class="checkbox">✓</div>
-                            <span class="check-text">Sholat Dzuhur</span>
-                        </div>
-                        <div class="checklist-item" onclick="toggleCheck(this)" data-index="6">
-                            <div class="checkbox">✓</div>
-                            <span class="check-text">Sholat Ashar</span>
-                        </div>
-                        <div class="checklist-item" onclick="toggleCheck(this)" data-index="7">
-                            <div class="checkbox">✓</div>
-                            <span class="check-text">Dzikir petang</span>
-                        </div>
-                        <div class="checklist-item" onclick="toggleCheck(this)" data-index="8">
-                            <div class="checkbox">✓</div>
-                            <span class="check-text">Sholat Maghrib</span>
-                        </div>
-                        <div class="checklist-item" onclick="toggleCheck(this)" data-index="9">
-                            <div class="checkbox">✓</div>
-                            <span class="check-text">Sholat Isya</span>
-                        </div>
-                    </div>
-                    
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progress-fill"></div>
-                    </div>
-                    <div class="progress-label">
-                        <span>Progres Hari Ini</span>
-                        <span id="progress-text">0%</span>
-                    </div>
-                </div>
-
-                <!-- Reflections -->
-                <div class="card card-full">
-                    <div class="card-header">
-                        <div class="card-icon icon-reflection">📝</div>
-                        <h2 class="card-title">Refleksi & Catatan</h2>
-                    </div>
-                    
-                    <div class="reflection-grid">
-                        <div class="reflection-item">
-                            <label class="reflection-label">🎯 Apa yang berjalan baik hari ini?</label>
-                            <textarea class="reflection-input" id="reflection-good" placeholder="Tuliskan pencapaian positif..." onchange="saveReflections()"></textarea>
-                        </div>
-                        <div class="reflection-item">
-                            <label class="reflection-label">⚡ Apa yang bisa diperbaiki?</label>
-                            <textarea class="reflection-input" id="reflection-improve" placeholder="Area untuk perbaikan..." onchange="saveReflections()"></textarea>
-                        </div>
-                        <div class="reflection-item">
-                            <label class="reflection-label">🙏 Syukur (Gratitude)</label>
-                            <textarea class="reflection-input" id="reflection-gratitude" placeholder="3 hal yang disyukuri hari ini..." onchange="saveReflections()"></textarea>
-                        </div>
-                        <div class="reflection-item">
-                            <label class="reflection-label">💭 Sedona Method: Lepaskan</label>
-                            <textarea class="reflection-input" id="reflection-sedona" placeholder="Apa yang bisa dilepaskan?" onchange="saveReflections()"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== POMODORO TAB ==================== -->
-        <div id="pomodoro-tab" class="tab-content">
-            <div class="planner-grid">
-                <!-- Timer Card -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon icon-pomodoro">🍅</div>
-                        <h2 class="card-title">Pomodoro Timer</h2>
-                    </div>
-                    
-                    <div class="timer-modes">
-                        <button class="mode-btn active" data-mode="work" onclick="setTimerMode('work')">
-                            🎯 Deep Work
-                        </button>
-                        <button class="mode-btn" data-mode="short-break" onclick="setTimerMode('short-break')">
-                            ☕ Istirahat
-                        </button>
-                        <button class="mode-btn" data-mode="long-break" onclick="setTimerMode('long-break')">
-                            🧘 Panjang
-                        </button>
-                    </div>
-                    
-                    <div class="timer-container">
-                        <svg class="timer-ring" viewBox="0 0 280 280">
-                            <circle class="timer-ring-bg" cx="140" cy="140" r="130"></circle>
-                            <circle class="timer-ring-progress work" id="timer-progress" cx="140" cy="140" r="130"></circle>
-                        </svg>
-                        <div class="timer-display">
-                            <span class="timer-time" id="timer-display">25:00</span>
-                            <span class="timer-mode" id="timer-mode-label">Deep Work</span>
-                        </div>
-                    </div>
-                    
-                    <div class="timer-controls">
-                        <button class="timer-btn" id="btn-timer-start" onclick="startTimer()">▶️ Mulai</button>
-                        <button class="timer-btn" id="btn-timer-pause" onclick="pauseTimer()" style="display: none;">⏸️ Pause</button>
-                        <button class="timer-btn secondary" onclick="resetTimer()">🔄 Reset</button>
-                        <button class="timer-btn secondary" onclick="skipTimer()">⏭️ Skip</button>
-                    </div>
-                    
-                    <p class="session-info" id="session-info">Sesi 1 dari 4 🍅</p>
-                </div>
-
-                <!-- Timer Stats -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon icon-guide">📊</div>
-                        <h2 class="card-title">Statistik Hari Ini</h2>
-                    </div>
-                    
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <span class="stat-value" id="stat-pomodoros">0</span>
-                            <span class="stat-label">Pomodoro</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-value" id="stat-focus-time">0m</span>
-                            <span class="stat-label">Fokus</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-value" id="stat-breaks">0</span>
-                            <span class="stat-label">Istirahat</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-value" id="stat-streak">0</span>
-                            <span class="stat-label">Streak</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Timer Settings -->
-                <div class="card card-full">
-                    <div class="card-header">
-                        <div class="card-icon icon-settings">⚙️</div>
-                        <h2 class="card-title">Pengaturan Timer</h2>
-                    </div>
-                    
-                    <div class="settings-grid">
-                        <div class="setting-item">
-                            <label>🎯 Deep Work (menit)</label>
-                            <input type="number" id="setting-work" value="25" min="1" max="120" onchange="updateTimerSettings()">
-                        </div>
-                        <div class="setting-item">
-                            <label>☕ Istirahat Pendek (menit)</label>
-                            <input type="number" id="setting-short-break" value="5" min="1" max="30" onchange="updateTimerSettings()">
-                        </div>
-                        <div class="setting-item">
-                            <label>🧘 Istirahat Panjang (menit)</label>
-                            <input type="number" id="setting-long-break" value="15" min="1" max="60" onchange="updateTimerSettings()">
-                        </div>
-                    </div>
-                    
-                    <div class="sound-settings">
-                        <h4>🔊 Pengaturan Suara</h4>
-                        <div class="sound-toggle">
-                            <label>
-                                <input type="checkbox" id="sound-enabled" checked onchange="updateSoundSettings()">
-                                Aktifkan notifikasi suara
-                            </label>
-                        </div>
-                        <div class="sound-volume">
-                            <label>Volume</label>
-                            <input type="range" id="sound-volume" min="0" max="100" value="50" onchange="updateSoundSettings()">
-                        </div>
-                        <button class="btn-secondary" onclick="testSound()">🔔 Test Suara</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== PAIRWISE TAB ==================== -->
-        <div id="pairwise-tab" class="tab-content">
-            <div class="planner-grid">
-                <!-- Input Options -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon icon-input">📝</div>
-                        <h2 class="card-title">Input Opsi</h2>
-                    </div>
-                    
-                    <p class="card-desc">Masukkan opsi yang ingin dibandingkan (3-10 item)</p>
-                    
-                    <div class="input-group">
-                        <input type="text" class="option-input" id="option-input" placeholder="Ketik opsi..." onkeypress="handleOptionKeypress(event)">
-                        <button class="btn-primary" onclick="addOption()">➕ Tambah</button>
-                    </div>
-                    
-                    <div class="options-list" id="options-list">
-                        <div class="empty-state">
-                            <span>📝</span>
-                            <p>Belum ada opsi. Tambahkan minimal 3 opsi.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="options-actions">
-                        <span class="options-count" id="options-count">0 opsi</span>
-                        <button class="btn-secondary" onclick="clearAllOptions()">🗑️ Hapus Semua</button>
-                        <button class="btn-primary" id="btn-start-comparison" onclick="startComparison()" disabled>▶️ Mulai Perbandingan</button>
-                    </div>
-                </div>
-
-                <!-- Comparison Card -->
-                <div class="card" id="comparison-card" style="display: none;">
-                    <div class="card-header">
-                        <div class="card-icon icon-compare">⚖️</div>
-                        <h2 class="card-title">Pilih yang Lebih Penting</h2>
-                    </div>
-                    
-                    <div class="comparison-progress">
-                        <div class="comparison-progress-bar">
-                            <div class="comparison-progress-fill" id="comparison-progress-fill"></div>
-                        </div>
-                        <span class="comparison-progress-text" id="comparison-progress-text">0 / 0</span>
-                    </div>
-                    
-                    <div class="comparison-options">
-                        <button class="comparison-btn" onclick="selectOption('a')">
-                            <span class="comparison-text" id="option-text-a">Opsi A</span>
-                        </button>
-                        <div class="comparison-vs">VS</div>
-                        <button class="comparison-btn" onclick="selectOption('b')">
-                            <span class="comparison-text" id="option-text-b">Opsi B</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Results Card -->
-                <div class="card" id="results-card" style="display: none;">
-                    <div class="card-header">
-                        <div class="card-icon icon-results">🏆</div>
-                        <h2 class="card-title">Hasil Prioritas</h2>
-                    </div>
-                    
-                    <div class="results-list" id="results-list"></div>
-                    
-                    <div class="results-actions">
-                        <button class="btn-secondary" onclick="resetComparison()">🔄 Ulang</button>
-                        <button class="btn-primary" onclick="addResultsToKanban()">📋 Tambah ke Kanban</button>
-                    </div>
-                </div>
-
-                <!-- Guide -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon icon-guide">💡</div>
-                        <h2 class="card-title">Cara Kerja</h2>
-                    </div>
-                    
-                    <div class="guide-steps">
-                        <div class="guide-step">
-                            <span class="step-number">1</span>
-                            <div class="step-content">
-                                <strong>Tambahkan Opsi</strong>
-                                <p>Minimal 3 opsi untuk dibandingkan</p>
-                            </div>
-                        </div>
-                        <div class="guide-step">
-                            <span class="step-number">2</span>
-                            <div class="step-content">
-                                <strong>Bandingkan</strong>
-                                <p>Pilih mana yang lebih penting</p>
-                            </div>
-                        </div>
-                        <div class="guide-step">
-                            <span class="step-number">3</span>
-                            <div class="step-content">
-                                <strong>Lihat Hasil</strong>
-                                <p>Dapatkan urutan prioritas</p>
-                            </div>
-                        </div>
-                        <div class="guide-step">
-                            <span class="step-number">4</span>
-                            <div class="step-content">
-                                <strong>Tambah ke Kanban</strong>
-                                <p>Kirim hasil langsung ke Kanban Board</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== KANBAN TAB ==================== -->
-        <div id="kanban-tab" class="tab-content">
-            <!-- Quick Add -->
-            <div class="kanban-quick-add">
-                <input type="text" class="quick-task-input" id="quick-task-input" placeholder="Tambah tugas baru..." onkeypress="handleQuickTaskKeypress(event)">
-                <select class="quick-task-priority" id="quick-task-priority">
-                    <option value="high">🔴 Tinggi</option>
-                    <option value="medium" selected>🟡 Sedang</option>
-                    <option value="low">🟢 Rendah</option>
-                </select>
-                <button class="btn-primary" onclick="quickAddTask()">➕ Tambah</button>
-            </div>
-
-            <!-- Kanban Stats -->
-            <div class="kanban-stats">
-                <div class="kanban-stat">
-                    <span class="kanban-stat-value" id="stat-total">0</span>
-                    <span class="kanban-stat-label">Total</span>
-                </div>
-                <div class="kanban-stat">
-                    <span class="kanban-stat-value" id="stat-progress">0</span>
-                    <span class="kanban-stat-label">In Progress</span>
-                </div>
-                <div class="kanban-stat">
-                    <span class="kanban-stat-value" id="stat-done">0</span>
-                    <span class="kanban-stat-label">Selesai</span>
-                </div>
-            </div>
-
-            <!-- Kanban Board -->
-            <div class="kanban-board">
-                <!-- Backlog Column -->
-                <div class="kanban-column">
-                    <div class="column-header">
-                        <h3>📥 Backlog</h3>
-                        <span class="column-count" id="count-backlog">0</span>
-                    </div>
-                    <div class="column-content" id="column-backlog" ondragover="handleDragOver(event)" ondrop="handleDrop(event, 'backlog')"></div>
-                </div>
-
-                <!-- To Do Column -->
-                <div class="kanban-column">
-                    <div class="column-header">
-                        <h3>📋 To Do</h3>
-                        <span class="column-count" id="count-todo">0</span>
-                    </div>
-                    <div class="column-content" id="column-todo" ondragover="handleDragOver(event)" ondrop="handleDrop(event, 'todo')"></div>
-                </div>
-
-                <!-- In Progress Column -->
-                <div class="kanban-column">
-                    <div class="column-header">
-                        <h3>🔄 In Progress</h3>
-                        <span class="column-count" id="count-inprogress">0</span>
-                    </div>
-                    <div class="column-content" id="column-inprogress" ondragover="handleDragOver(event)" ondrop="handleDrop(event, 'inprogress')"></div>
-                </div>
-
-                <!-- Done Column -->
-                <div class="kanban-column">
-                    <div class="column-header">
-                        <h3>✅ Done</h3>
-                        <span class="column-count" id="count-done">0</span>
-                    </div>
-                    <div class="column-content" id="column-done" ondragover="handleDragOver(event)" ondrop="handleDrop(event, 'done')"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== PROGRESS TAB ==================== -->
-        <div id="progress-tab" class="tab-content">
-            <div class="planner-grid">
-                <!-- Period Selector -->
-                <div class="card card-full">
-                    <div class="card-header">
-                        <div class="card-icon icon-guide">📊</div>
-                        <h2 class="card-title">Rekap Progres</h2>
-                    </div>
-                    
-                    <div class="period-selector">
-                        <button class="period-btn active" data-period="week" onclick="showProgress('week')">📅 1 Minggu</button>
-                        <button class="period-btn" data-period="month" onclick="showProgress('month')">📆 1 Bulan</button>
-                        <button class="period-btn" data-period="quarter" onclick="showProgress('quarter')">📊 3 Bulan</button>
-                        <button class="period-btn" data-period="year" onclick="showProgress('year')">📈 1 Tahun</button>
-                    </div>
-                </div>
-
-                <!-- Summary Stats -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon icon-pomodoro">🎯</div>
-                        <h2 class="card-title">Ringkasan</h2>
-                    </div>
-                    
-                    <div class="progress-summary" id="progress-summary">
-                        <div class="summary-item">
-                            <span class="summary-value" id="summary-tasks-completed">0</span>
-                            <span class="summary-label">Tugas Selesai</span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-value" id="summary-pomodoros">0</span>
-                            <span class="summary-label">Total Pomodoro</span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-value" id="summary-focus-hours">0h</span>
-                            <span class="summary-label">Waktu Fokus</span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-value" id="summary-checklist-avg">0%</span>
-                            <span class="summary-label">Rata-rata Checklist</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Ibadah Stats -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon icon-tahajud">🕌</div>
-                        <h2 class="card-title">Statistik Ibadah</h2>
-                    </div>
-                    
-                    <div class="ibadah-stats" id="ibadah-stats">
-                        <div class="ibadah-item">
-                            <span class="ibadah-icon">🌙</span>
-                            <div class="ibadah-info">
-                                <span class="ibadah-name">Tahajud</span>
-                                <div class="ibadah-bar">
-                                    <div class="ibadah-fill" id="ibadah-tahajud" style="width: 0%"></div>
-                                </div>
-                            </div>
-                            <span class="ibadah-percent" id="ibadah-tahajud-pct">0%</span>
-                        </div>
-                        <div class="ibadah-item">
-                            <span class="ibadah-icon">☀️</span>
-                            <div class="ibadah-info">
-                                <span class="ibadah-name">Subuh Berjamaah</span>
-                                <div class="ibadah-bar">
-                                    <div class="ibadah-fill" id="ibadah-subuh" style="width: 0%"></div>
-                                </div>
-                            </div>
-                            <span class="ibadah-percent" id="ibadah-subuh-pct">0%</span>
-                        </div>
-                        <div class="ibadah-item">
-                            <span class="ibadah-icon">📿</span>
-                            <div class="ibadah-info">
-                                <span class="ibadah-name">Dzikir Pagi</span>
-                                <div class="ibadah-bar">
-                                    <div class="ibadah-fill" id="ibadah-dzikir-pagi" style="width: 0%"></div>
-                                </div>
-                            </div>
-                            <span class="ibadah-percent" id="ibadah-dzikir-pagi-pct">0%</span>
-                        </div>
-                        <div class="ibadah-item">
-                            <span class="ibadah-icon">🌅</span>
-                            <div class="ibadah-info">
-                                <span class="ibadah-name">Dzikir Petang</span>
-                                <div class="ibadah-bar">
-                                    <div class="ibadah-fill" id="ibadah-dzikir-petang" style="width: 0%"></div>
-                                </div>
-                            </div>
-                            <span class="ibadah-percent" id="ibadah-dzikir-petang-pct">0%</span>
-                        </div>
-                        <div class="ibadah-item">
-                            <span class="ibadah-icon">🏃</span>
-                            <div class="ibadah-info">
-                                <span class="ibadah-name">Olahraga</span>
-                                <div class="ibadah-bar">
-                                    <div class="ibadah-fill" id="ibadah-olahraga" style="width: 0%"></div>
-                                </div>
-                            </div>
-                            <span class="ibadah-percent" id="ibadah-olahraga-pct">0%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Daily Trend Chart -->
-                <div class="card card-full">
-                    <div class="card-header">
-                        <div class="card-icon icon-morning">📈</div>
-                        <h2 class="card-title">Trend Harian</h2>
-                    </div>
-                    
-                    <div class="trend-chart" id="trend-chart">
-                        <!-- Chart will be rendered here -->
-                    </div>
-                </div>
-
-                <!-- History Log -->
-                <div class="card card-full">
-                    <div class="card-header">
-                        <div class="card-icon icon-log">📜</div>
-                        <h2 class="card-title">Riwayat Harian</h2>
-                    </div>
-                    
-                    <div class="history-list" id="history-list">
-                        <div class="empty-state">
-                            <span>📊</span>
-                            <p>Belum ada data. Mulai gunakan aplikasi untuk melihat riwayat.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== SETTINGS TAB ==================== -->
-        <div id="settings-tab" class="tab-content">
-            <div class="planner-grid">
-                <!-- Google Sheets Setup -->
-                <div class="card card-full">
-                    <div class="card-header">
-                        <div class="card-icon icon-gsheet">📊</div>
-                        <h2 class="card-title">Google Sheets Sync</h2>
-                    </div>
-                    
-                    <div class="setup-steps">
-                        <div class="setup-step">
-                            <span class="step-number">1</span>
-                            <div class="step-content">
-                                <strong>Buat Google Sheet baru</strong>
-                                <p>Buka <a href="https://sheets.google.com" target="_blank">Google Sheets</a> dan buat spreadsheet baru</p>
-                            </div>
-                        </div>
-                        <div class="setup-step">
-                            <span class="step-number">2</span>
-                            <div class="step-content">
-                                <strong>Buka Apps Script</strong>
-                                <p>Klik menu Extensions → Apps Script</p>
-                            </div>
-                        </div>
-                        <div class="setup-step">
-                            <span class="step-number">3</span>
-                            <div class="step-content">
-                                <strong>Paste kode berikut</strong>
-                                <button class="btn-secondary" onclick="toggleAppsScript()">📝 Lihat Kode</button>
-                                <button class="btn-primary" onclick="copyAppsScript()">📋 Copy Kode</button>
-                            </div>
-                        </div>
-                        <div class="setup-step">
-                            <span class="step-number">4</span>
-                            <div class="step-content">
-                                <strong>Deploy sebagai Web App</strong>
-                                <p>Deploy → New deployment → Web app → Execute as: Me, Who: Anyone</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="apps-script-code" id="apps-script-code" style="display: none;">
-                        <h4>Google Apps Script Code:</h4>
-                        <p class="script-note">Copy seluruh kode di bawah ini ke Apps Script editor:</p>
-                        <pre class="script-code" id="apps-script-content">
-// ==================== SYNC PLANNER - GOOGLE APPS SCRIPT ====================
-// Version 3.0 - With Auto Sync & Progress Tracking
-
-function doGet(e) {
-  return handleRequest(e, 'GET');
-}
-
-function doPost(e) {
-  return handleRequest(e, 'POST');
-}
-
-function handleRequest(e, method) {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  </header>
   
-  try {
-    if (method === 'GET') {
-      const type = e.parameter.type || 'tasks';
+  <main class="main">
+    <!-- HOME -->
+    <div class="page active" id="page-home">
+      <div class="card pomodoro-active" id="pomodoroActive" style="display:none;">
+        <div class="timer-time" id="timerDisplay">25:00</div>
+        <div class="timer-label" id="timerLabel">FOKUS</div>
+        <div class="timer-task" id="timerTask"></div>
+        <div class="timer-controls">
+          <button class="timer-btn complete" onclick="completePomodoro()">✓ Selesai</button>
+          <button class="timer-btn cancel" onclick="cancelPomodoro()">✕ Batal</button>
+        </div>
+        <div style="margin-top:12px;font-size:12px;opacity:0.8;">
+          Distraksi: <span id="distractionCount">0</span> 
+          <button onclick="addDistraction()" style="background:rgba(255,255,255,0.2);border:none;color:white;padding:4px 10px;border-radius:10px;margin-left:8px;cursor:pointer;">+1</button>
+        </div>
+      </div>
       
-      switch(type) {
-        case 'tasks':
-          return getTasksData(ss);
-        case 'daily':
-          return getDailyData(ss, e.parameter.date);
-        case 'progress':
-          return getProgressData(ss, e.parameter.period || 'week');
-        case 'sync':
-          return getSyncData(ss);
-        default:
-          return createResponse({ success: true, message: 'API Ready' });
-      }
-    }
+      <div class="card">
+        <div class="card-header"><span class="card-title">🕌 Sholat Hari Ini</span></div>
+        <div class="sholat-grid" id="sholatGrid"><div class="loading"><div class="spinner"></div></div></div>
+      </div>
+      
+      <div class="section-title">⚡ Aksi Cepat</div>
+      <div class="quick-actions">
+        <button class="action-btn primary" onclick="openModal('pomodoro')"><span class="icon">🍅</span><span class="label">Mulai Fokus</span></button>
+        <button class="action-btn" onclick="openModal('journal')"><span class="icon">📝</span><span class="label">Tulis Jurnal</span></button>
+        <button class="action-btn" onclick="openModal('braindump')"><span class="icon">💭</span><span class="label">Brain Dump</span></button>
+        <button class="action-btn" onclick="showPage('goals')"><span class="icon">🎯</span><span class="label">Goals</span></button>
+      </div>
+      
+      <div class="section-title">📋 Ritual Hari Ini</div>
+      <div class="card"><div id="habitList"><div class="loading"><div class="spinner"></div></div></div></div>
+      
+      <div class="section-title">📝 Jurnal Hari Ini</div>
+      <div class="card"><div id="journalList"><div class="loading"><div class="spinner"></div></div></div></div>
+    </div>
     
-    if (method === 'POST') {
-      const data = JSON.parse(e.postData.contents);
-      
-      switch(data.type) {
-        case 'tasks':
-          return saveTasksData(ss, data.tasks);
-        case 'daily':
-          return saveDailyData(ss, data);
-        case 'pairwise':
-          return savePairwiseData(ss, data);
-        case 'progress':
-          return saveProgressData(ss, data);
-        case 'fullSync':
-          return saveFullSync(ss, data);
-        default:
-          return createResponse({ success: false, error: 'Unknown type' });
-      }
-    }
-  } catch (error) {
-    return createResponse({ success: false, error: error.message });
-  }
-}
-
-function createResponse(data) {
-  return ContentService.createTextOutput(JSON.stringify(data))
-    .setMimeType(ContentService.MimeType.JSON);
-}
-
-// ==================== TASKS ====================
-function getTasksData(ss) {
-  let sheet = ss.getSheetByName('Tasks');
-  if (!sheet) {
-    return createResponse({ success: true, data: [] });
-  }
-  
-  const data = sheet.getDataRange().getValues();
-  if (data.length <= 1) {
-    return createResponse({ success: true, data: [] });
-  }
-  
-  const tasks = [];
-  for (let i = 1; i < data.length; i++) {
-    if (data[i][0]) {
-      tasks.push({
-        id: data[i][0],
-        title: data[i][1],
-        column: data[i][2],
-        priority: data[i][3],
-        notes: data[i][4] || '',
-        link: data[i][5] || '',
-        created: data[i][6],
-        completed: data[i][7] || ''
-      });
-    }
-  }
-  
-  return createResponse({ success: true, data: tasks });
-}
-
-function saveTasksData(ss, tasks) {
-  let sheet = ss.getSheetByName('Tasks');
-  if (!sheet) {
-    sheet = ss.insertSheet('Tasks');
-    sheet.appendRow(['ID', 'Title', 'Column', 'Priority', 'Notes', 'Link', 'Created', 'Completed']);
-    sheet.getRange(1, 1, 1, 8).setFontWeight('bold');
-  }
-  
-  // Clear existing data (except header)
-  const lastRow = sheet.getLastRow();
-  if (lastRow > 1) {
-    sheet.deleteRows(2, lastRow - 1);
-  }
-  
-  // Add new data
-  tasks.forEach(task => {
-    sheet.appendRow([
-      task.id,
-      task.title,
-      task.column,
-      task.priority,
-      task.notes || '',
-      task.link || '',
-      task.created,
-      task.completed || ''
-    ]);
-  });
-  
-  return createResponse({ success: true, message: 'Tasks saved', count: tasks.length });
-}
-
-// ==================== DAILY DATA ====================
-function getDailyData(ss, date) {
-  let sheet = ss.getSheetByName('Daily');
-  if (!sheet) {
-    return createResponse({ success: true, data: null });
-  }
-  
-  const data = sheet.getDataRange().getValues();
-  for (let i = 1; i < data.length; i++) {
-    if (data[i][0] === date) {
-      return createResponse({
-        success: true,
-        data: {
-          date: data[i][0],
-          checklist: JSON.parse(data[i][1] || '[]'),
-          reflections: JSON.parse(data[i][2] || '{}'),
-          pomodoros: data[i][3] || 0,
-          focusTime: data[i][4] || 0
-        }
-      });
-    }
-  }
-  
-  return createResponse({ success: true, data: null });
-}
-
-function saveDailyData(ss, data) {
-  let sheet = ss.getSheetByName('Daily');
-  if (!sheet) {
-    sheet = ss.insertSheet('Daily');
-    sheet.appendRow(['Date', 'Checklist', 'Reflections', 'Pomodoros', 'FocusTime', 'Timestamp']);
-    sheet.getRange(1, 1, 1, 6).setFontWeight('bold');
-  }
-  
-  // Check if entry for today exists
-  const allData = sheet.getDataRange().getValues();
-  let rowIndex = -1;
-  for (let i = 1; i < allData.length; i++) {
-    if (allData[i][0] === data.date) {
-      rowIndex = i + 1;
-      break;
-    }
-  }
-  
-  if (rowIndex > 0) {
-    // Update existing row
-    sheet.getRange(rowIndex, 2).setValue(JSON.stringify(data.checklist));
-    sheet.getRange(rowIndex, 3).setValue(JSON.stringify(data.reflections));
-    sheet.getRange(rowIndex, 4).setValue(data.pomodoros || 0);
-    sheet.getRange(rowIndex, 5).setValue(data.focusTime || 0);
-    sheet.getRange(rowIndex, 6).setValue(new Date().toISOString());
-  } else {
-    // Add new row
-    sheet.appendRow([
-      data.date,
-      JSON.stringify(data.checklist),
-      JSON.stringify(data.reflections),
-      data.pomodoros || 0,
-      data.focusTime || 0,
-      new Date().toISOString()
-    ]);
-  }
-  
-  return createResponse({ success: true, message: 'Daily data saved' });
-}
-
-// ==================== PROGRESS DATA ====================
-function getProgressData(ss, period) {
-  let sheet = ss.getSheetByName('Daily');
-  if (!sheet) {
-    return createResponse({ success: true, data: { days: [], summary: {} } });
-  }
-  
-  const now = new Date();
-  let startDate = new Date();
-  
-  switch(period) {
-    case 'week':
-      startDate.setDate(now.getDate() - 7);
-      break;
-    case 'month':
-      startDate.setMonth(now.getMonth() - 1);
-      break;
-    case 'quarter':
-      startDate.setMonth(now.getMonth() - 3);
-      break;
-    case 'year':
-      startDate.setFullYear(now.getFullYear() - 1);
-      break;
-  }
-  
-  const data = sheet.getDataRange().getValues();
-  const days = [];
-  let totalPomodoros = 0;
-  let totalFocus = 0;
-  let totalChecklist = 0;
-  let checklistDays = 0;
-  
-  for (let i = 1; i < data.length; i++) {
-    const rowDate = new Date(data[i][0].split('/').reverse().join('-'));
-    if (rowDate >= startDate) {
-      const checklist = JSON.parse(data[i][1] || '[]');
-      const checked = checklist.filter(c => c).length;
-      const total = checklist.length || 10;
-      
-      days.push({
-        date: data[i][0],
-        checklistPercent: Math.round((checked / total) * 100),
-        pomodoros: data[i][3] || 0,
-        focusTime: data[i][4] || 0
-      });
-      
-      totalPomodoros += data[i][3] || 0;
-      totalFocus += data[i][4] || 0;
-      totalChecklist += (checked / total) * 100;
-      checklistDays++;
-    }
-  }
-  
-  // Get completed tasks
-  let tasksSheet = ss.getSheetByName('Tasks');
-  let completedTasks = 0;
-  if (tasksSheet) {
-    const tasksData = tasksSheet.getDataRange().getValues();
-    for (let i = 1; i < tasksData.length; i++) {
-      if (tasksData[i][2] === 'done') {
-        const completedDate = tasksData[i][7] ? new Date(tasksData[i][7]) : null;
-        if (completedDate && completedDate >= startDate) {
-          completedTasks++;
-        }
-      }
-    }
-  }
-  
-  return createResponse({
-    success: true,
-    data: {
-      days: days,
-      summary: {
-        tasksCompleted: completedTasks,
-        totalPomodoros: totalPomodoros,
-        focusHours: Math.round(totalFocus / 60 * 10) / 10,
-        avgChecklist: checklistDays > 0 ? Math.round(totalChecklist / checklistDays) : 0
-      }
-    }
-  });
-}
-
-// ==================== PAIRWISE ====================
-function savePairwiseData(ss, data) {
-  let sheet = ss.getSheetByName('Pairwise');
-  if (!sheet) {
-    sheet = ss.insertSheet('Pairwise');
-    sheet.appendRow(['Date', 'Comparisons', 'Results', 'Timestamp']);
-    sheet.getRange(1, 1, 1, 4).setFontWeight('bold');
-  }
-  
-  sheet.appendRow([
-    new Date().toLocaleDateString('id-ID'),
-    data.totalComparisons,
-    JSON.stringify(data.results),
-    new Date().toISOString()
-  ]);
-  
-  return createResponse({ success: true, message: 'Pairwise saved' });
-}
-
-// ==================== FULL SYNC ====================
-function getSyncData(ss) {
-  const tasksResult = JSON.parse(getTasksData(ss).getContent());
-  const today = new Date().toLocaleDateString('id-ID');
-  const dailyResult = JSON.parse(getDailyData(ss, today).getContent());
-  
-  return createResponse({
-    success: true,
-    data: {
-      tasks: tasksResult.data || [],
-      daily: dailyResult.data || null,
-      lastSync: new Date().toISOString()
-    }
-  });
-}
-
-function saveFullSync(ss, data) {
-  // Save tasks
-  if (data.tasks) {
-    saveTasksData(ss, data.tasks);
-  }
-  
-  // Save daily
-  if (data.daily) {
-    saveDailyData(ss, data.daily);
-  }
-  
-  return createResponse({ 
-    success: true, 
-    message: 'Full sync complete',
-    timestamp: new Date().toISOString()
-  });
-}
-                        </pre>
-                    </div>
-                </div>
-
-                <!-- Connection Settings -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon icon-connection">🔗</div>
-                        <h2 class="card-title">Koneksi</h2>
-                    </div>
-                    
-                    <div class="connection-status" id="connection-status">
-                        <span class="status-icon">⚪</span>
-                        <span class="status-text">Belum terhubung</span>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Web App URL</label>
-                        <input type="url" class="form-input" id="gsheet-url" placeholder="https://script.google.com/macros/s/...">
-                        <p class="form-hint">Paste URL dari deployment Apps Script</p>
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button class="btn-secondary" onclick="testConnection()">🧪 Test Koneksi</button>
-                        <button class="btn-primary" onclick="saveGSheetSettings()">💾 Simpan</button>
-                    </div>
-                </div>
-
-                <!-- Auto Sync Settings -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon icon-sync">🔄</div>
-                        <h2 class="card-title">Auto Sync</h2>
-                    </div>
-                    
-                    <div class="auto-sync-settings">
-                        <div class="setting-toggle">
-                            <label>
-                                <input type="checkbox" id="auto-sync-enabled" onchange="updateAutoSyncSettings()">
-                                Aktifkan Auto Sync
-                            </label>
-                            <p class="setting-desc">Data akan disinkronkan secara otomatis</p>
-                        </div>
-                        
-                        <div class="setting-item">
-                            <label>Interval Sync (menit)</label>
-                            <select id="sync-interval" onchange="updateAutoSyncSettings()">
-                                <option value="1">1 menit</option>
-                                <option value="5" selected>5 menit</option>
-                                <option value="10">10 menit</option>
-                                <option value="15">15 menit</option>
-                                <option value="30">30 menit</option>
-                            </select>
-                        </div>
-                        
-                        <div class="last-sync-info">
-                            <span>Sync terakhir:</span>
-                            <span id="last-sync-time">Belum pernah</span>
-                        </div>
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button class="btn-primary" onclick="manualSync()">🔄 Sync Sekarang</button>
-                    </div>
-                </div>
-
-                <!-- Manual Sync Actions -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon icon-data">📤</div>
-                        <h2 class="card-title">Sinkronisasi Manual</h2>
-                    </div>
-                    
-                    <div class="sync-actions">
-                        <div class="sync-item">
-                            <div class="sync-info">
-                                <h4>📋 Kanban Tasks</h4>
-                                <p>Sync semua tugas ke/dari Google Sheets</p>
-                            </div>
-                            <div class="sync-buttons">
-                                <button class="btn-sync" onclick="syncTasksToSheet()">⬆️ Upload</button>
-                                <button class="btn-sync" onclick="loadTasksFromSheet()">⬇️ Download</button>
-                            </div>
-                        </div>
-                        
-                        <div class="sync-item">
-                            <div class="sync-info">
-                                <h4>📅 Data Harian</h4>
-                                <p>Checklist & refleksi hari ini</p>
-                            </div>
-                            <div class="sync-buttons">
-                                <button class="btn-sync" onclick="syncDailyToSheet()">⬆️ Upload</button>
-                                <button class="btn-sync" onclick="loadDailyFromSheet()">⬇️ Download</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Activity Log -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon icon-log">📜</div>
-                        <h2 class="card-title">Log Aktivitas</h2>
-                    </div>
-                    
-                    <div class="log-container" id="log-entries">
-                        <div class="log-empty">Belum ada aktivitas sync</div>
-                    </div>
-                </div>
-
-                <!-- Data Management -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon icon-data">💾</div>
-                        <h2 class="card-title">Manajemen Data</h2>
-                    </div>
-                    
-                    <div class="data-actions">
-                        <button class="btn-secondary" onclick="exportAllData()">📤 Export Data (JSON)</button>
-                        <button class="btn-secondary" onclick="document.getElementById('import-file').click()">📥 Import Data</button>
-                        <input type="file" id="import-file" accept=".json" style="display: none;" onchange="importAllData(event)">
-                        <button class="btn-danger" onclick="clearAllData()">🗑️ Hapus Semua Data</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- GOALS -->
+    <div class="page" id="page-goals">
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab('goals',this)">🎯 Goals</button>
+        <button class="tab" onclick="switchTab('tasks',this)">📋 Tasks</button>
+      </div>
+      <div id="goalsTab"><div id="goalsList"><div class="loading"><div class="spinner"></div></div></div>
+        <button class="btn-submit" style="margin-top:14px" onclick="openModal('goal')">+ Tambah Goal</button>
+      </div>
+      <div id="tasksTab" style="display:none"><div id="tasksList"><div class="loading"><div class="spinner"></div></div></div>
+        <button class="btn-submit" style="margin-top:14px" onclick="openModal('task')">+ Tambah Task</button>
+      </div>
     </div>
-
-    <!-- Task Edit Modal -->
-    <div class="modal-overlay" id="task-modal">
-        <div class="modal">
-            <h2>✏️ Edit Tugas</h2>
-            <input type="hidden" id="edit-task-id">
-            <input type="text" class="modal-input" id="edit-task-title" placeholder="Judul tugas">
-            <select class="modal-select" id="edit-task-priority">
-                <option value="high">🔴 Prioritas Tinggi</option>
-                <option value="medium">🟡 Prioritas Sedang</option>
-                <option value="low">🟢 Prioritas Rendah</option>
-            </select>
-            <select class="modal-select" id="edit-task-column">
-                <option value="backlog">📥 Backlog</option>
-                <option value="todo">📋 To Do</option>
-                <option value="inprogress">🔄 In Progress</option>
-                <option value="done">✅ Done</option>
-            </select>
-            <textarea class="modal-input modal-textarea" id="edit-task-notes" placeholder="Catatan..."></textarea>
-            <input type="url" class="modal-input" id="edit-task-link" placeholder="Link (opsional)">
-            <div class="modal-buttons">
-                <button class="modal-btn modal-btn-delete" onclick="deleteTask()">🗑️ Hapus</button>
-                <button class="modal-btn modal-btn-cancel" onclick="closeTaskModal()">Batal</button>
-                <button class="modal-btn modal-btn-save" onclick="saveTaskEdit()">Simpan</button>
-            </div>
-        </div>
+    
+    <!-- STATS -->
+    <div class="page" id="page-stats">
+      <div class="section-title">📊 Statistik Minggu Ini</div>
+      <div class="stats-grid" id="statsGrid"><div class="loading"><div class="spinner"></div></div></div>
+      <div class="section-title">📈 Detail Sesi</div>
+      <div class="card" id="statsDetail"><div class="loading"><div class="spinner"></div></div></div>
     </div>
-
-    <!-- Pairwise to Kanban Modal -->
-    <div class="modal-overlay" id="pairwise-kanban-modal">
-        <div class="modal">
-            <h2>📋 Tambah ke Kanban</h2>
-            <p class="modal-desc">Pilih prioritas yang akan ditambahkan ke Kanban Board:</p>
-            <div class="pairwise-kanban-list" id="pairwise-kanban-list"></div>
-            <div class="modal-buttons">
-                <button class="modal-btn modal-btn-cancel" onclick="closePairwiseKanbanModal()">Batal</button>
-                <button class="modal-btn modal-btn-save" onclick="confirmAddToKanban()">Tambahkan</button>
-            </div>
-        </div>
+    
+    <!-- SETTINGS -->
+    <div class="page" id="page-settings">
+      <div class="section-title">⚙️ Pengaturan</div>
+      <div class="card">
+        <div class="form-group"><label class="form-label">User ID</label><input type="text" class="form-input" id="settingsUserId" readonly></div>
+        <div class="form-group"><label class="form-label">API URL</label><input type="text" class="form-input" id="settingsApiUrl"></div>
+        <button class="btn-submit" onclick="saveSettings()">💾 Simpan</button>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <button class="btn-submit btn-secondary" onclick="refreshAllData()">🔄 Refresh Data</button>
+      </div>
     </div>
-
-    <!-- Audio for notifications -->
-    <audio id="notification-sound" preload="auto">
-        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2teleQwHYre51JdyCgNoo8OzkHQJBVmPuLKQfBUIVIS0sJeEFgxOgLCzlYYOAl58qrGxnpQhE1qBprOxnJMdGVp8n6+2ppwlFlqFpqawmJIXFlV5m6W0sZstJk19oaqwpJMRE0x3laGltaA2MU13mamolokMCUp9lZmcoKRKO010lqWdjoYLBEl9kpOWmJlWRlN0laGalY4ODU5+kIySkYxXR1Vzj5eYk5IWFk1+j4qHg3paSlRwjJGRj5IaG01+jYiBdnFhSlVtioqJho0cHEt+i4N1a2VjT1triYWAe4MZHUR8iIF2bWhlWFtnhH94b24TFT17h392cXBrXFxmdXtwaGcTEDl4hXp2dHNtYmJocnJqYWIODTd0gXd0c3VubGtsbm5mXl4MCTR0fXNwcHFwcXFubGRdWQkINXF6cGxqam1vcW9rYl1YCgczcXZsaGZlanBwbmhgW1gJBzJucWllYF5ka2xpZFxYVggHMGxsZ2JdW2BnaGViXVhVCAcvamllXlhYXWRkYV1ZVVMICC5oZmFaVVRaYV9dWlZSUAgILWZiXldTUlhcW1lWUk9NCAgqY15aVFBPVFhXVVJOTEoICClhW1ZRT01RVFNRTktJRwgJKF9YVFBMS09SUEZNR0RHBwknXFVRTkpITU9NSkVDQEQHCSdbUk5LR0VMTUpHQz4+QQcKJVlPTEhFQ0lKR0RBPT06BwsRWE1JRUJASEZDPzw4NwYAB1BJRUI+PENCPzs3MzQHCCFMRT49OjlAPDs2MS0sBgkgSUI7OTY0Ojg1MSwpKAYKH0U+ODYyMTY0Mi0pJiQGDRtAOTQxLi0yMC0pJSIfBw0YOzYwLSsqLiwnJCEeHAcOFDYxLCkoJysnIyAfHRsIEBIxLCgnJSQoJSEeHBkYCBAPLCglIyIhJSEfGxkXFgkRDSklISAdHCEeGxgVExMJEwwlIR4bGRkdGhcUEhAPChYPHx0aFxYWGRYTEA4NDAsLFBcZFhQTFBYTEA4LCggJCxQVEw8ODRANGQ4LCQcGBgsMEA4MCgkNDAwLCQcFBAMGBgkLCgoKCgsLCgkIBgUEBAQFBwkJCQkJCQkJCAcGBQQEBAUGBwgICAcIBwcHBwYGBQUFBQUFBgYGBgYGBgYGBgYGBgYGBQUFBQUFBQUFBQU=" type="audio/wav">
-    </audio>
-
-    <!-- Scripts -->
-    <script src="app.js"></script>
+  </main>
+  
+  <nav class="bottom-nav">
+    <a href="#" class="nav-item active" onclick="showPage('home')" data-page="home"><span class="icon">🏠</span>Beranda</a>
+    <a href="#" class="nav-item" onclick="showPage('goals')" data-page="goals"><span class="icon">🎯</span>Goals</a>
+    <a href="#" class="nav-item" onclick="showPage('stats')" data-page="stats"><span class="icon">📊</span>Statistik</a>
+    <a href="#" class="nav-item" onclick="showPage('settings')" data-page="settings"><span class="icon">⚙️</span>Setting</a>
+  </nav>
+  
+  <!-- MODALS -->
+  <div class="modal-overlay" id="modal-journal" onclick="if(event.target===this)closeModal('journal')">
+    <div class="modal">
+      <div class="modal-header"><span class="modal-title">📝 Tulis Jurnal</span><button class="modal-close" onclick="closeModal('journal')">×</button></div>
+      <div class="modal-body">
+        <div class="form-group"><label class="form-label">Jam</label><input type="time" class="form-input" id="journalTime"></div>
+        <div class="form-group"><label class="form-label">Catatan</label><textarea class="form-input form-textarea" id="journalContent" placeholder="Apa yang sedang/sudah dikerjakan..."></textarea></div>
+        <button class="btn-submit" onclick="submitJournal()">💾 Simpan</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal-overlay" id="modal-braindump" onclick="if(event.target===this)closeModal('braindump')">
+    <div class="modal">
+      <div class="modal-header"><span class="modal-title">💭 Brain Dump</span><button class="modal-close" onclick="closeModal('braindump')">×</button></div>
+      <div class="modal-body">
+        <div class="form-group"><label class="form-label">Tuangkan pikiran...</label><textarea class="form-input form-textarea" id="braindumpContent" placeholder="Ide, kekhawatiran, to-do..." style="min-height:150px"></textarea></div>
+        <button class="btn-submit" onclick="submitBrainDump()">💾 Simpan</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal-overlay" id="modal-pomodoro" onclick="if(event.target===this)closeModal('pomodoro')">
+    <div class="modal">
+      <div class="modal-header"><span class="modal-title">🍅 Mulai Sesi Fokus</span><button class="modal-close" onclick="closeModal('pomodoro')">×</button></div>
+      <div class="modal-body">
+        <div class="form-group"><label class="form-label">Tipe Sesi</label>
+          <div class="pomo-types">
+            <div><div class="pomo-type-card selected" onclick="selectPomoType(this,'POMODORO_25')">🍅<br><b>25 mnt</b></div></div>
+            <div><div class="pomo-type-card" onclick="selectPomoType(this,'DEEP_WORK_60')">🧠<br><b>60 mnt</b></div></div>
+            <div><div class="pomo-type-card" onclick="selectPomoType(this,'DEEP_WORK_90')">🚀<br><b>90 mnt</b></div></div>
+          </div>
+        </div>
+        <input type="hidden" id="pomodoroType" value="POMODORO_25">
+        <div class="form-group"><label class="form-label">Yang akan dikerjakan</label><input type="text" class="form-input" id="pomodoroTask" placeholder="Contoh: Review dokumen kontrak"></div>
+        <div class="form-group"><label class="form-label">Goal (opsional)</label><select class="form-input" id="pomodoroGoal"><option value="">-- Pilih --</option></select></div>
+        <button class="btn-submit" onclick="startPomodoro()">▶️ Mulai</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal-overlay" id="modal-goal" onclick="if(event.target===this)closeModal('goal')">
+    <div class="modal">
+      <div class="modal-header"><span class="modal-title">🎯 Tambah Goal</span><button class="modal-close" onclick="closeModal('goal')">×</button></div>
+      <div class="modal-body">
+        <div class="form-group"><label class="form-label">Judul</label><input type="text" class="form-input" id="goalTitle" placeholder="Contoh: Selesaikan LLAT 2025"></div>
+        <div class="form-group"><label class="form-label">Deskripsi</label><textarea class="form-input form-textarea" id="goalDesc" placeholder="Detail goal..."></textarea></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Quarter</label><select class="form-input" id="goalQuarter"><option value="1">Q1</option><option value="2">Q2</option><option value="3">Q3</option><option value="4">Q4</option></select></div>
+          <div class="form-group"><label class="form-label">Tahun</label><input type="number" class="form-input" id="goalYear" value="2025"></div>
+        </div>
+        <button class="btn-submit" onclick="submitGoal()">💾 Simpan</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal-overlay" id="modal-task" onclick="if(event.target===this)closeModal('task')">
+    <div class="modal">
+      <div class="modal-header"><span class="modal-title">📋 Tambah Task</span><button class="modal-close" onclick="closeModal('task')">×</button></div>
+      <div class="modal-body">
+        <div class="form-group"><label class="form-label">Goal</label><select class="form-input" id="taskGoal"><option value="">-- Pilih --</option></select></div>
+        <div class="form-group"><label class="form-label">Judul Task</label><input type="text" class="form-input" id="taskTitle" placeholder="Contoh: Buat SPM"></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Prioritas</label><select class="form-input" id="taskPriority"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select></div>
+          <div class="form-group"><label class="form-label">Status</label><select class="form-input" id="taskStatus"><option value="backlog">Backlog</option><option value="todo" selected>To Do</option></select></div>
+        </div>
+        <button class="btn-submit" onclick="submitTask()">💾 Simpan</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal-overlay" id="modal-goaldetail" onclick="if(event.target===this)closeModal('goaldetail')">
+    <div class="modal">
+      <div class="modal-header"><span class="modal-title" id="goalDetailTitle">🎯 Detail Goal</span><button class="modal-close" onclick="closeModal('goaldetail')">×</button></div>
+      <div class="modal-body" id="goalDetailBody"></div>
+    </div>
+  </div>
+  
+  <div class="toast" id="toast"></div>
+  
+  <script src="app.js"></script>
 </body>
 </html>
